@@ -1,0 +1,34 @@
+name: Simon Data Plans and Pricing
+description: Simon Data offers enterprise custom pricing for their AI-first customer data platform. Pricing is based on total contact volumes processed by the Simon AI platform. No publicly listed fixed tiers or free plans are available; all deployments are tailored to specific business needs, data volume, and use case.
+version: '0.1'
+url: https://www.simon.ai/pricing
+created: '2026-06-13'
+modified: '2026-06-13'
+plans:
+  - name: Enterprise Custom
+    description: Fully customized deployment of the Simon Data CDP tailored to enterprise marketing teams. Pricing is determined by total contact volumes and specific platform feature requirements. Includes access to segmentation, journey orchestration, AI agents, event tracking, and multi-channel activation.
+    type: custom
+    pricing:
+      model: contact-volume
+      public: false
+      notes: Pricing is not publicly listed. Contact Simon Data sales for a tailored quote based on contact volume and feature needs.
+    features:
+      - Composable CDP with cloud-native architecture
+      - Advanced identity resolution
+      - AI-powered segmentation and audience building
+      - Journey orchestration across channels
+      - Personalization Studio with AI Fields and Moments
+      - AI Agents for automated data and campaign execution
+      - Real-time event ingestion via Simon Signal API
+      - Outbound webhooks and integrations (20+ platforms)
+      - Data warehouse connectors (Snowflake, BigQuery, Redshift, Azure)
+      - Real-Time Content API (premium feature)
+      - Predictive modeling (churn, LTV, purchase propensity)
+      - Multi-channel activation (email, SMS, paid media, push)
+      - SFTP and S3 data ingestion and egress
+      - Dedicated customer success support
+    free_trial: false
+    free_plan: false
+contact:
+  url: https://www.simon.ai/contact-us
+  notes: Contact Simon Data sales team to discuss pricing and deployment options.

@@ -1,0 +1,41 @@
+name: Simon Data Rate Limits
+description: Rate limit information for the Simon Data API, including the Simon Signal event ingestion endpoint. Specific numeric rate limits are not publicly documented; enterprise customers should consult their Simon Data account team for contractual throughput limits and best practices for high-volume event ingestion.
+version: '0.1'
+url: https://docs.simondata.com/reference/getting-started
+created: '2026-06-13'
+modified: '2026-06-13'
+rateLimits:
+  - name: Simon Signal Event Ingestion
+    description: Rate limits for posting events to the Simon Signal collect endpoint at https://dev.simonsignal.com/events/v1/collect. Limits are enforced per partner account and depend on contracted throughput volume.
+    endpoint: https://dev.simonsignal.com/events/v1/collect
+    method: POST
+    scope: per-partner
+    public: false
+    notes: Specific rate limit thresholds are not publicly disclosed. High-volume event ingestion customers should work with the Simon Data engineering team to establish appropriate throughput targets.
+    headers:
+      - name: partnerSecret
+        location: body (context object)
+        description: Shared secret used for authentication and partner identification; also used for rate limit scoping.
+    errorCodes:
+      - code: 400
+        meaning: Invalid JSON body
+      - code: 401
+        meaning: Unauthorized - invalid or missing partnerSecret
+      - code: 403
+        meaning: Forbidden - insufficient permissions
+      - code: 412
+        meaning: Invalid request data - malformed event payload
+      - code: 500
+        meaning: Internal server error
+  - name: Outbound Webhooks
+    description: Rate limits for webhook deliveries from Simon Data to external systems. Simon Data follows webhook best practices for retry logic and delivery guarantees.
+    scope: per-endpoint
+    public: false
+    notes: See Simon Data webhook best practices documentation for guidance on handling delivery retries and idempotency.
+    reference: https://docs.simondata.com/reference/getting-started
+bestPractices:
+  - Use idempotency keys where supported to safely retry failed requests.
+  - Implement exponential backoff when receiving 5xx errors from the Simon Signal endpoint.
+  - Batch events where possible to reduce request overhead.
+  - Monitor event ingestion pipeline health via the Simon Data operational status page at https://docs.simondata.com/docs/operational-status.
+  - Contact your Simon Data account team for contractual SLA and throughput guarantees.

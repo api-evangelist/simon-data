@@ -1,0 +1,102 @@
+name: Simon Data
+description: Simon Data is an AI-first customer data platform (CDP) that empowers marketing teams with faster, more precise segmentation and personalization. It provides a REST API for managing audiences, activating segments across channels, tracking events via the Simon Signal event collection API, and syncing customer data with downstream marketing tools including Salesforce, Klaviyo, Google Ads, and Facebook.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/simon-data/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+aid: simon-data
+type: Index
+tags:
+  - Customer Data Platform
+  - CDP
+  - Marketing Automation
+  - Audience Segmentation
+  - Event Tracking
+  - Data Ingestion
+  - Personalization
+  - Marketing Technology
+apis:
+  - name: Simon Data Event Ingestion API
+    description: Collects real-time behavioral and transactional events from client applications into the Simon Data platform. Supports event types including authentication, cart, transactions, page views, product views, registration, search, waitlist, and custom events. Events are posted to the Simon Signal endpoint using a shared partner secret for authentication.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.simondata.com/reference/getting-started
+    baseURL: https://dev.simonsignal.com/events/v1
+    tags:
+      - Events
+      - Tracking
+      - Data Ingestion
+      - Real-Time
+    properties:
+      - type: Documentation
+        url: https://docs.simondata.com/reference/getting-started
+      - type: OpenAPI
+        url: https://docs.simondata.com/llms.txt
+    contact:
+      - FN: Simon Data Support
+        url: https://docs.simondata.com/docs/how-to-use-this-knowledge-base
+  - name: Simon Data Contact API
+    description: Provides programmatic access to contact records within the Simon Data platform, enabling retrieval and management of customer profiles and their associated traits for segmentation and personalization workflows.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.simondata.com/reference/getting-started
+    baseURL: https://dev.simonsignal.com
+    tags:
+      - Contacts
+      - Customer Profiles
+      - Segmentation
+      - CRM
+    properties:
+      - type: Documentation
+        url: https://docs.simondata.com/reference/getting-started
+  - name: Simon Data Real-Time Content API
+    description: A premium API feature that fetches data from an external API at send time to enable dynamic, personalized content delivery across marketing channels. Powers real-time personalization at the moment of message delivery.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.simondata.com/reference/real-time-content
+    baseURL: https://dev.simonsignal.com
+    tags:
+      - Real-Time Content
+      - Personalization
+      - Dynamic Content
+      - Marketing
+    properties:
+      - type: Documentation
+        url: https://docs.simondata.com/reference/real-time-content
+  - name: Simon Data Outbound Webhooks API
+    description: Enables Simon Data to push customer segment and event data to external systems via webhooks. Supports payload specifications, best practices, and outbound integration authentication for downstream marketing tools and data warehouses.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.simondata.com/reference/getting-started
+    baseURL: https://dev.simonsignal.com
+    tags:
+      - Webhooks
+      - Outbound Integration
+      - Data Sync
+      - Automation
+    properties:
+      - type: Documentation
+        url: https://docs.simondata.com/reference/getting-started
+common:
+  - type: Website
+    url: https://www.simon.ai/
+  - type: Documentation
+    url: https://docs.simondata.com/
+  - type: GitHubOrg
+    url: https://github.com/Radico
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/simon-data
+  - type: X
+    url: https://x.com/simon_data
+  - type: Blog
+    url: https://www.simon.ai/blog
+  - type: Pricing
+    url: https://www.simon.ai/pricing
+  - type: StatusPage
+    url: https://docs.simondata.com/docs/operational-status
+  - type: Plans
+    url: plans/simon-data-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/simon-data-rate-limits.yml
+  - type: FinOps
+    url: finops/simon-data-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

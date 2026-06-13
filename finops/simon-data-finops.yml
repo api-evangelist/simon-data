@@ -1,0 +1,65 @@
+name: Simon Data FinOps Framework
+description: FinOps considerations for organizations using the Simon Data customer data platform. Covers cost visibility, allocation, optimization, and governance for CDP spend across marketing technology stacks.
+version: '1.0'
+framework: FinOps Framework 1.0
+created: '2026-06-13'
+modified: '2026-06-13'
+vendor: Simon Data
+vendorUrl: https://www.simon.ai/
+pricingModel:
+  type: contact-volume
+  description: Simon Data pricing is based on total contact volumes read by the Simon AI platform. Costs scale with the number of customer records managed and activated across marketing channels.
+  public: false
+  customQuote: true
+  contactUrl: https://www.simon.ai/contact-us
+focusAreas:
+  - name: Understand
+    description: Gain visibility into Simon Data consumption and cost drivers.
+    activities:
+      - Track total contact volume across all Simon Data environments.
+      - Inventory all active data sources feeding the CDP (Redshift, BigQuery, Snowflake, S3, SFTP, real-time events).
+      - Identify which marketing channels and integrations are consuming Simon Data activations (email, SMS, paid media, push).
+      - Map predictive model usage (churn, LTV, propensity) to business outcomes.
+      - Review Simon Data contract terms for volume thresholds and overage charges.
+  - name: Quantify
+    description: Measure and attribute Simon Data costs to business units, campaigns, or products.
+    activities:
+      - Attribute contact volume costs to marketing teams or business lines consuming segmentation.
+      - Measure cost-per-activation across channels using Simon Data journey and campaign reporting.
+      - Track real-time content API usage as a premium feature cost center.
+      - Monitor event ingestion volume via Simon Signal to forecast data pipeline costs.
+      - Compare CDP cost against downstream revenue attribution from activated segments.
+  - name: Optimize
+    description: Reduce waste and improve the ROI of Simon Data investment.
+    activities:
+      - Audit contact records for duplicates and inactive customers to reduce billable contact volume.
+      - Implement identity resolution best practices to consolidate fragmented customer profiles.
+      - Evaluate which integrations and downstream activations drive measurable campaign performance.
+      - Prioritize predictive model usage for high-value segments to maximize ROI on premium features.
+      - Review outbound webhook configurations to eliminate redundant data flows.
+      - Negotiate volume tiers with Simon Data during contract renewal based on actual usage data.
+  - name: Govern
+    description: Establish policies and controls for responsible Simon Data spend.
+    activities:
+      - Define data retention policies to limit unnecessary storage of inactive contacts.
+      - Establish approval workflows for adding new data sources or marketing channel integrations.
+      - Review Simon Data access controls and user permissions quarterly.
+      - Set up alerts for significant spikes in event ingestion or contact volume growth.
+      - Align Simon Data contract renewal cycles with annual marketing budget planning.
+      - Maintain an inventory of all Simon Data integrations for vendor risk and cost governance.
+costDrivers:
+  - driver: Contact Volume
+    description: Primary cost driver; pricing scales with the total number of customer profiles managed in the platform.
+    optimization: Regularly suppress and archive inactive contacts; enforce data hygiene to prevent profile duplication.
+  - driver: Real-Time Content API
+    description: Premium feature with additional cost implications for high-frequency personalization requests at send time.
+    optimization: Limit real-time content API usage to highest-value personalization use cases; cache where feasible.
+  - driver: Data Warehouse Integrations
+    description: Ingestion from Snowflake, BigQuery, Redshift, and Azure may incur data egress costs on the cloud provider side in addition to Simon Data processing.
+    optimization: Optimize query frequency and incremental sync strategies to minimize data transfer volumes.
+  - driver: Predictive Modeling
+    description: AI model inference for churn, LTV, and propensity scoring at scale may affect platform tier costs.
+    optimization: Target predictive scoring at high-value segments rather than the full contact universe.
+notes:
+  - Simon Data does not publish a public pricing page with specific tier costs; all FinOps analysis depends on contractual terms negotiated with the Simon Data sales team.
+  - Operational cost transparency can be improved by requesting usage reporting from your Simon Data customer success manager.

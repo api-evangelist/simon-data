@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/simon-data/main/json-schema/simon-data-contact-schema.json",
+  "title": "Simon Data Contact",
+  "description": "Schema for a contact record returned by the Simon Data Audience API.",
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "string",
+      "description": "Response status string (e.g., success).",
+      "example": "success"
+    },
+    "contact": {
+      "type": "object",
+      "description": "Contact profile fields. Actual keys depend on the fields parameter used in the request.",
+      "properties": {
+        "email_address": {
+          "type": "string",
+          "format": "email"
+        },
+        "first_name": { "type": "string" },
+        "last_name": { "type": "string" },
+        "address_city": { "type": "string" },
+        "address_state": { "type": "string" },
+        "flow_variant_membership": {
+          "type": "array",
+          "description": "List of flow variant IDs and names the contact is enrolled in.",
+          "items": { "type": "string" }
+        },
+        "total_lifetime_value_jde": {
+          "type": "string",
+          "description": "Computed lifetime value in currency format."
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

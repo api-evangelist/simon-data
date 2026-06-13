@@ -1,0 +1,24 @@
+{
+  "partnerId": "partner-123",
+  "partnerSecret": "your-shared-secret",
+  "clientId": "device-session-abc123",
+  "sentAt": 1718000000000,
+  "type": "identify",
+  "context": {
+    "name": "simon.js",
+    "version": "2.0.0",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+    "url": "https://example.com/account/login"
+  },
+  "userId": "user-456",
+  "traits": {
+    "email": "jane.doe@example.com",
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "userName": "janedoe",
+    "properties": {
+      "loyaltyTier": "gold",
+      "preferredChannel": "email"
+    }
+  }
+}

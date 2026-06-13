@@ -1,0 +1,30 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.simondata.com/audience/v2/contacts",
+    "params": {
+      "identity": "email:tom@hello.com",
+      "fields": "first_name,address_city,address_state,flow_variant_membership,total_lifetime_value_jde"
+    },
+    "headers": {
+      "Authorization": "Bearer {access_token}"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "status": "success",
+      "contact": {
+        "email_address": "tom@hello.com",
+        "first_name": "Tom",
+        "address_city": "New York",
+        "address_state": "NY",
+        "flow_variant_membership": [
+          "142309",
+          "203850-Variant A"
+        ],
+        "total_lifetime_value_jde": "$241.56"
+      }
+    }
+  }
+}

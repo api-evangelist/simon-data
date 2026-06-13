@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/simon-data/main/json-schema/simon-data-event-payload-schema.json",
+  "title": "Simon Data Event Payload",
+  "description": "Schema for events submitted to the Simon Signal event collection API. Covers both track and identify command types.",
+  "type": "object",
+  "required": ["partnerId", "partnerSecret", "clientId", "sentAt", "type", "context"],
+  "properties": {
+    "partnerId": {
+      "type": "string",
+      "description": "Internal identifier for the customer's site."
+    },
+    "partnerSecret": {
+      "type": "string",
+      "description": "Shared secret used for authentication."
+    },
+    "clientId": {
+      "type": "string",
+      "maxLength": 45,
+      "description": "Device or session identifier."
+    },
+    "sentAt": {
+      "type": "integer",
+      "description": "Timestamp in epoch milliseconds."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["track", "identify"],
+      "description": "Command type for this event."
+    },
+    "ipAddress": {
+      "type": "string",
+      "description": "Optional user device IP address."
+    },
+    "timezone": {
+      "type": "integer",
+      "description": "Optional UTC offset in minutes."
+    },
+    "context": {
+      "type": "object",
+      "description": "Event context metadata.",
+      "properties": {
+        "debug": {
+          "type": "boolean",
+          "description": "When true, sends 412 validation errors in response body."
+        },
+        "name": {
+          "type": "string",
+          "description": "Client library identifier (e.g., simon.js)."
+        },
+        "version": {
+          "type": "string",
+          "description": "Client library version."
+        },
+        "userAgent": {
+          "type": "string",
+          "description": "Device user agent string."
+        },
+        "url": {
+          "type": "string",
+          "description": "Page URL where the event originated."
+        },
+        "page": {
+          "type": "object"
+        },
+        "device": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Device type (e.g., android, ios, kindle, windows)."
+            }
+          }
+        }
+      }
+    },
+    "userId": {
+      "type": "string",
+      "description": "The user's identifier."
+    },
+    "traits": {
+      "type": "object",
+      "description": "User traits for identify commands.",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "name": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "ARN": {
+          "type": "string",
+          "description": "AWS SNS identifier."
+        },
+        "properties": {
+          "type": "object",
+          "description": "Custom properties object."
+        }
+      }
+    },
+    "event": {
+      "type": "string",
+      "enum": [
+        "page_view",
+        "product_view",
+        "add_to_cart",
+        "cart",
+        "update_cart",
+        "remove_from_cart",
+        "complete_transaction",
+        "registration",
+        "favorite",
+        "waitlist",
+        "authentication",
+        "custom"
+      ],
+      "description": "Event type name. Required when type is track."
+    },
+    "properties": {
+      "type": "object",
+      "description": "Event-specific properties. Fields vary by event type.",
+      "properties": {
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "price": { "type": "number" },
+        "brand": { "type": "string" },
+        "category": { "type": "string" },
+        "color": { "type": "string" },
+        "size": { "type": "string" },
+        "style": { "type": "string" },
+        "variant": { "type": "string" },
+        "quantity": { "type": "integer" },
+        "previousQuantity": { "type": "integer" },
+        "productImageUrl": { "type": "string", "format": "uri" },
+        "productUrl": { "type": "string", "format": "uri" },
+        "cartItems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "productId": { "type": "string" },
+              "productName": { "type": "string" },
+              "price": { "type": "number" },
+              "quantity": { "type": "integer" },
+              "brand": { "type": "string" },
+              "category": { "type": "string" },
+              "color": { "type": "string" },
+              "size": { "type": "string" },
+              "variant": { "type": "string" }
+            }
+          }
+        },
+        "transactionId": { "type": "string" },
+        "revenue": { "type": "number" },
+        "shipping": { "type": "number" },
+        "tax": { "type": "number" },
+        "promotion": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "username": { "type": "string" },
+        "isLoggedIn": { "type": "boolean" },
+        "optIn": { "type": "boolean" },
+        "ARN": { "type": "string" },
+        "eventName": { "type": "string" },
+        "requiresIdentity": { "type": "boolean" },
+        "properties": {
+          "type": "object",
+          "description": "Custom nested properties."
+        }
+      }
+    }
+  },
+  "if": {
+    "properties": { "type": { "const": "track" } }
+  },
+  "then": {
+    "required": ["event"]
+  },
+  "else": {
+    "required": ["traits"]
+  }
+}

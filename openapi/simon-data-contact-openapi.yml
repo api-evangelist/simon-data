@@ -1,0 +1,127 @@
+openapi: 3.0.3
+info:
+  title: Simon Data Contact API
+  description: >
+    Provides programmatic access to contact records within the Simon Data platform,
+    enabling retrieval of customer profiles and their associated traits for
+    segmentation and personalization workflows.
+  version: '2'
+  contact:
+    name: Simon Data Support
+    url: https://docs.simondata.com/docs/how-to-use-this-knowledge-base
+  x-api-id: simon-data-contact
+servers:
+  - url: https://api.simondata.com/audience/v2
+    description: Production
+security:
+  - oauth2: []
+paths:
+  /contacts:
+    get:
+      operationId: getContact
+      summary: Get a Contact
+      description: >
+        Retrieve contact information to help personalize a customer's experience.
+        Requires an identity string in the format `identifier:id` and a
+        comma-separated list of contact fields to return.
+      tags:
+        - Contacts
+      parameters:
+        - name: identity
+          in: query
+          required: true
+          description: >
+            Identifier type and value for the contact in the format `identifier:id`.
+            Supported identifier types: simonid, email, email-hash,
+            primary-subscriber-key (Salesforce Marketing Cloud), riid (Responsys),
+            zendeskid (Zendesk).
+          schema:
+            type: string
+            example: "email:tom@hello.com"
+        - name: fields
+          in: query
+          required: true
+          description: >
+            Comma-separated list of contact fields to return in the response.
+            Supports standard fields and flow variant memberships.
+          schema:
+            type: string
+            example: "first_name,flow_variant_membership"
+      responses:
+        '200':
+          description: Contact found and returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactResponse'
+              examples:
+                success:
+                  summary: Successful contact retrieval
+                  value:
+                    status: success
+                    contact:
+                      email_address: "tom@hello.com"
+                      first_name: "Tom"
+                      address_city: "New York"
+                      address_state: "NY"
+                      flow_variant_membership:
+                        - "142309"
+                        - "203850-Variant A"
+                      total_lifetime_value_jde: "$241.56"
+        '400':
+          description: Bad Request. The identity or fields parameter is malformed.
+        '403':
+          description: Forbidden. Invalid or missing OAuth 2.0 credentials.
+        '429':
+          description: Rate Limited. Too many requests.
+        '500':
+          description: Server error.
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: OAuth 2.0 authentication required for all endpoints.
+      flows:
+        clientCredentials:
+          tokenUrl: https://api.simondata.com/oauth/token
+          scopes: {}
+  schemas:
+    ContactResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the response (e.g., "success").
+          example: success
+        contact:
+          $ref: '#/components/schemas/Contact'
+    Contact:
+      type: object
+      description: >
+        Contact record from Simon Data. Fields returned depend on the `fields`
+        query parameter. Standard fields include profile attributes; dynamic
+        fields include segment memberships and computed values.
+      properties:
+        email_address:
+          type: string
+          format: email
+        first_name:
+          type: string
+        last_name:
+          type: string
+        address_city:
+          type: string
+        address_state:
+          type: string
+        flow_variant_membership:
+          type: array
+          description: >
+            List of flow variant IDs and names the contact is currently enrolled in.
+          items:
+            type: string
+        total_lifetime_value_jde:
+          type: string
+          description: Computed lifetime value in currency format.
+      additionalProperties:
+        description: >
+          Any additional contact fields requested via the `fields` parameter.

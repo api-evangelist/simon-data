@@ -1,0 +1,42 @@
+{
+  "partnerId": "partner-123",
+  "partnerSecret": "your-shared-secret",
+  "clientId": "device-session-abc123",
+  "sentAt": 1718000000000,
+  "type": "track",
+  "event": "complete_transaction",
+  "context": {
+    "name": "simon.js",
+    "version": "2.0.0",
+    "url": "https://example.com/checkout/confirmation",
+    "userAgent": "Mozilla/5.0"
+  },
+  "userId": "user-456",
+  "properties": {
+    "transactionId": "order-789",
+    "revenue": 119.96,
+    "tax": 9.60,
+    "shipping": 4.99,
+    "promotion": "SUMMER20",
+    "cartItems": [
+      {
+        "productId": "sku-001",
+        "productName": "Blue Widget",
+        "price": 29.99,
+        "quantity": 2,
+        "brand": "Acme",
+        "category": "Widgets",
+        "color": "Blue"
+      },
+      {
+        "productId": "sku-002",
+        "productName": "Red Gadget",
+        "price": 59.98,
+        "quantity": 1,
+        "brand": "Acme",
+        "category": "Gadgets",
+        "color": "Red"
+      }
+    ]
+  }
+}

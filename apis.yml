@@ -31,7 +31,7 @@ apis:
       - type: Documentation
         url: https://docs.simondata.com/reference/getting-started
       - type: OpenAPI
-        url: https://docs.simondata.com/llms.txt
+        url: https://raw.githubusercontent.com/api-evangelist/simon-data/refs/heads/main/openapi/simon-data-event-ingestion-openapi.yml
     contact:
       - FN: Simon Data Support
         url: https://docs.simondata.com/docs/how-to-use-this-knowledge-base
@@ -39,7 +39,7 @@ apis:
     description: Provides programmatic access to contact records within the Simon Data platform, enabling retrieval and management of customer profiles and their associated traits for segmentation and personalization workflows.
     image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     humanURL: https://docs.simondata.com/reference/getting-started
-    baseURL: https://dev.simonsignal.com
+    baseURL: https://api.simondata.com/audience/v2
     tags:
       - Contacts
       - Customer Profiles
@@ -47,7 +47,9 @@ apis:
       - CRM
     properties:
       - type: Documentation
-        url: https://docs.simondata.com/reference/getting-started
+        url: https://docs.simondata.com/reference/get-a-contact
+      - type: OpenAPI
+        url: https://raw.githubusercontent.com/api-evangelist/simon-data/refs/heads/main/openapi/simon-data-contact-openapi.yml
   - name: Simon Data Real-Time Content API
     description: A premium API feature that fetches data from an external API at send time to enable dynamic, personalized content delivery across marketing channels. Powers real-time personalization at the moment of message delivery.
     image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg

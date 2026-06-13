@@ -1,0 +1,215 @@
+name: Simon Data Vocabulary
+description: >
+  Domain vocabulary and terminology for the Simon Data Customer Data Platform (CDP),
+  covering event ingestion, audience management, contact profiles, real-time
+  personalization, and outbound webhook integrations.
+terms:
+  - term: CDP
+    label: Customer Data Platform
+    definition: >
+      A centralized platform that collects, unifies, and activates customer data
+      from multiple sources to enable personalized marketing and analytics.
+    tags:
+      - Platform
+      - Data Management
+
+  - term: Simon Signal
+    label: Simon Signal Event Collection API
+    definition: >
+      The Simon Data event ingestion endpoint (simonsignal.com) that accepts
+      real-time behavioral and transactional events from client applications.
+    tags:
+      - Event Ingestion
+      - API
+
+  - term: partnerId
+    label: Partner ID
+    definition: >
+      An internal identifier assigned by Simon Data to identify the customer's
+      site. Required in all Simon Signal API requests.
+    tags:
+      - Authentication
+      - Event Ingestion
+
+  - term: partnerSecret
+    label: Partner Secret
+    definition: >
+      The shared secret credential used to authenticate requests to the Simon
+      Signal event ingestion API. Provided by the Simon Data account manager.
+    tags:
+      - Authentication
+      - Security
+
+  - term: clientId
+    label: Client ID
+    definition: >
+      A device or browser session identifier (max 45 characters) included in
+      every Simon Signal event payload to track anonymous sessions.
+    tags:
+      - Event Ingestion
+      - Identity
+
+  - term: identify
+    label: Identify Command
+    definition: >
+      A Simon Signal event type that establishes or updates user identity.
+      Requires a traits object with at minimum an email address.
+    tags:
+      - Event Types
+      - Identity
+
+  - term: track
+    label: Track Command
+    definition: >
+      A Simon Signal event type that records a user interaction or behavior.
+      Requires an event name from the supported event type list.
+    tags:
+      - Event Types
+      - Behavioral Data
+
+  - term: page_view
+    label: Page View Event
+    definition: >
+      A track event type that records when a user views a page within a
+      client application.
+    tags:
+      - Event Types
+
+  - term: product_view
+    label: Product View Event
+    definition: >
+      A track event type that records when a user views a product detail page.
+      Captures product attributes including id, name, price, brand, category,
+      color, size, style, variant, and quantity.
+    tags:
+      - Event Types
+      - Ecommerce
+
+  - term: add_to_cart
+    label: Add to Cart Event
+    definition: >
+      A track event type that records when a user adds a product to their
+      shopping cart.
+    tags:
+      - Event Types
+      - Ecommerce
+
+  - term: complete_transaction
+    label: Complete Transaction Event
+    definition: >
+      A track event type that records a completed purchase. Captures
+      transactionId, revenue, cartItems, shipping, tax, and promotion.
+    tags:
+      - Event Types
+      - Ecommerce
+
+  - term: registration
+    label: Registration Event
+    definition: >
+      A track event type that records when a user creates an account. Captures
+      email, username, userId, firstName, lastName, and optIn consent flag.
+    tags:
+      - Event Types
+      - Identity
+
+  - term: authentication
+    label: Authentication Event
+    definition: >
+      A track event type that records user login or logout events. Captures
+      userId, isLoggedIn status, ARN (AWS SNS), and email.
+    tags:
+      - Event Types
+      - Identity
+
+  - term: custom
+    label: Custom Event
+    definition: >
+      A track event type for non-standard interactions. Requires an eventName
+      and supports arbitrary properties. requiresIdentity flag controls
+      whether a userId must be present.
+    tags:
+      - Event Types
+
+  - term: contact
+    label: Contact
+    definition: >
+      A unified customer profile within Simon Data. Accessed via the Audience
+      API using identity types such as email, simonid, or third-party identifiers.
+    tags:
+      - Audience
+      - Customer Profiles
+
+  - term: identity
+    label: Identity
+    definition: >
+      A string in the format `identifier:value` used to look up a contact
+      in the Simon Data Audience API. Supported identifier types include
+      email, simonid, email-hash, primary-subscriber-key, riid, and zendeskid.
+    tags:
+      - Identity
+      - Audience API
+
+  - term: simonid
+    label: Simon ID
+    definition: >
+      Simon Data's internal unique identifier for a contact record.
+    tags:
+      - Identity
+
+  - term: flow_variant_membership
+    label: Flow Variant Membership
+    definition: >
+      A contact field that lists the flow variant IDs and labels a contact
+      is currently enrolled in within Simon Data's personalization flows.
+    tags:
+      - Personalization
+      - Audience
+
+  - term: real_time_content
+    label: Real-Time Content API
+    definition: >
+      A premium Simon Data feature that fetches data from an external API at
+      message send time to enable dynamic, personalized content delivery.
+      Supports GET and POST methods, API key, OAuth 2.0, and certificate auth.
+    tags:
+      - Personalization
+      - Real-Time
+
+  - term: outbound_webhook
+    label: Outbound Webhook
+    definition: >
+      A Simon Data mechanism for pushing customer segment and event data to
+      external systems. Supports payload specifications and best-practices
+      authentication for downstream marketing tools and data warehouses.
+    tags:
+      - Webhooks
+      - Integration
+
+  - term: sentAt
+    label: Sent At
+    definition: >
+      An epoch millisecond timestamp included in Simon Signal event payloads
+      indicating when the event was generated on the client side.
+    tags:
+      - Event Ingestion
+      - Timestamps
+
+  - term: debug_mode
+    label: Debug Mode
+    definition: >
+      A Simon Signal context flag (context.debug: true) that causes the API to
+      return 412 responses with detailed validation error messages rather than
+      silently ignoring malformed events.
+    tags:
+      - Developer Tools
+      - Event Ingestion
+
+  - term: ARN
+    label: AWS SNS ARN
+    definition: >
+      Amazon Resource Name for an AWS Simple Notification Service endpoint.
+      Included in identify traits and authentication events to enable
+      push notification targeting.
+    tags:
+      - Push Notifications
+      - Identity

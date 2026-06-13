@@ -1,0 +1,170 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "simon": "https://docs.simondata.com/reference/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "EventPayload": "simon:event-ingestion-api",
+    "Contact": "simon:get-a-contact",
+    "Webhook": "simon:outbound-webhooks",
+    "RealTimeContent": "simon:real-time-content",
+
+    "partnerId": {
+      "@id": "simon:partnerId",
+      "@type": "xsd:string"
+    },
+    "partnerSecret": {
+      "@id": "simon:partnerSecret",
+      "@type": "xsd:string"
+    },
+    "clientId": {
+      "@id": "simon:clientId",
+      "@type": "xsd:string"
+    },
+    "sentAt": {
+      "@id": "simon:sentAt",
+      "@type": "xsd:integer"
+    },
+    "type": {
+      "@id": "simon:eventType",
+      "@type": "xsd:string"
+    },
+    "event": {
+      "@id": "simon:eventName",
+      "@type": "xsd:string"
+    },
+    "context": {
+      "@id": "simon:eventContext"
+    },
+    "traits": {
+      "@id": "simon:userTraits"
+    },
+    "properties": {
+      "@id": "simon:eventProperties"
+    },
+    "userId": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "schema:email",
+      "@type": "xsd:string"
+    },
+    "firstName": {
+      "@id": "schema:givenName",
+      "@type": "xsd:string"
+    },
+    "lastName": {
+      "@id": "schema:familyName",
+      "@type": "xsd:string"
+    },
+    "ARN": {
+      "@id": "simon:awsSnsArn",
+      "@type": "xsd:string"
+    },
+    "productId": {
+      "@id": "schema:productID",
+      "@type": "xsd:string"
+    },
+    "productName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "price": {
+      "@id": "schema:price",
+      "@type": "xsd:decimal"
+    },
+    "brand": {
+      "@id": "schema:brand",
+      "@type": "xsd:string"
+    },
+    "category": {
+      "@id": "schema:category",
+      "@type": "xsd:string"
+    },
+    "quantity": {
+      "@id": "schema:orderQuantity",
+      "@type": "xsd:integer"
+    },
+    "cartItems": {
+      "@id": "schema:orderedItem",
+      "@container": "@list"
+    },
+    "transactionId": {
+      "@id": "schema:orderNumber",
+      "@type": "xsd:string"
+    },
+    "revenue": {
+      "@id": "schema:price",
+      "@type": "xsd:decimal"
+    },
+    "tax": {
+      "@id": "schema:taxValue",
+      "@type": "xsd:decimal"
+    },
+    "shipping": {
+      "@id": "schema:DeliveryCharge",
+      "@type": "xsd:decimal"
+    },
+    "identity": {
+      "@id": "simon:contactIdentity",
+      "@type": "xsd:string"
+    },
+    "contact": {
+      "@id": "schema:Person"
+    },
+    "email_address": {
+      "@id": "schema:email",
+      "@type": "xsd:string"
+    },
+    "first_name": {
+      "@id": "schema:givenName",
+      "@type": "xsd:string"
+    },
+    "last_name": {
+      "@id": "schema:familyName",
+      "@type": "xsd:string"
+    },
+    "address_city": {
+      "@id": "schema:addressLocality",
+      "@type": "xsd:string"
+    },
+    "address_state": {
+      "@id": "schema:addressRegion",
+      "@type": "xsd:string"
+    },
+    "flow_variant_membership": {
+      "@id": "simon:flowVariantMembership",
+      "@container": "@list"
+    },
+    "total_lifetime_value_jde": {
+      "@id": "simon:totalLifetimeValue",
+      "@type": "xsd:string"
+    },
+    "simonid": {
+      "@id": "simon:simonId",
+      "@type": "xsd:string"
+    },
+    "isLoggedIn": {
+      "@id": "simon:isLoggedIn",
+      "@type": "xsd:boolean"
+    },
+    "optIn": {
+      "@id": "schema:receiveNewsletters",
+      "@type": "xsd:boolean"
+    },
+    "userAgent": {
+      "@id": "schema:softwareVersion",
+      "@type": "xsd:string"
+    },
+    "ipAddress": {
+      "@id": "simon:ipAddress",
+      "@type": "xsd:string"
+    },
+    "timezone": {
+      "@id": "simon:timezoneOffset",
+      "@type": "xsd:integer"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/simon-data-contact-openapi.yml
+docs: https://docs.simondata.com/reference/getting-started
+note: Simon Data does not publish OAuth scopes; its Audience/Contact API uses bearer
+  tokens issued by a Client Solutions Manager and the Signal event API uses a shared
+  partner secret, with OAuth 2.0 only referenced for outbound integrations to third-party
+  systems (https://docs.simondata.com/reference/getting-started).
+schemes:
+- name: oauth2
+  source: openapi/simon-data-contact-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.simondata.com/oauth/token
+  description: OAuth 2.0 authentication required for all endpoints.
+scopes: []

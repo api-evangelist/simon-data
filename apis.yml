@@ -77,6 +77,10 @@ apis:
       - type: Documentation
         url: https://docs.simondata.com/reference/getting-started
 common:
+  - type: Authentication
+    url: authentication/simon-data-authentication.yml
+  - type: OAuthScopes
+    url: scopes/simon-data-scopes.yml
   - type: Website
     url: https://www.simon.ai/
   - type: Documentation

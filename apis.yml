@@ -77,6 +77,10 @@ apis:
       - type: Documentation
         url: https://docs.simondata.com/reference/getting-started
 common:
+  - type: TrustCenter
+    url: security/simon-data-trust-center.yml
+  - type: DomainSecurity
+    url: security/simon-data-domain-security.yml
   - type: Authentication
     url: authentication/simon-data-authentication.yml
   - type: OAuthScopes

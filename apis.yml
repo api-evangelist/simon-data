@@ -77,6 +77,8 @@ apis:
       - type: Documentation
         url: https://docs.simondata.com/reference/getting-started
 common:
+  - type: AgenticAccess
+    url: agentic-access/simon-data-agentic-access.yml
   - type: TrustCenter
     url: security/simon-data-trust-center.yml
   - type: DomainSecurity

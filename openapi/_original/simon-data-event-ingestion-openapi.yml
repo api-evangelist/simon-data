@@ -1,0 +1,327 @@
+openapi: 3.0.3
+info:
+  title: Simon Data Event Ingestion API
+  description: >
+    Collects real-time behavioral and transactional events from client applications
+    into the Simon Data platform (Simon Signal). Supports event types including
+    authentication, cart, transactions, page views, product views, registration,
+    search, waitlist, and custom events. Events are posted to the Simon Signal
+    endpoint using a shared partner secret for authentication.
+  version: '1'
+  contact:
+    name: Simon Data Support
+    url: https://docs.simondata.com/docs/how-to-use-this-knowledge-base
+  x-api-id: simon-data-event-ingestion
+servers:
+  - url: https://simonsignal.com/http/v1
+    description: Production
+  - url: https://staging.simonsignal.com/http/v1
+    description: Staging
+  - url: https://dev.simonsignal.com/http/v1
+    description: Development
+paths:
+  /collect:
+    post:
+      operationId: collectEvent
+      summary: Collect an Event
+      description: >
+        Accepts a single behavioral or transactional event payload. All events
+        must include partnerId, partnerSecret, clientId, type, sentAt, and
+        context fields. The type field must be either `track` or `identify`.
+        Events larger than 100 KB are rejected. Use debug mode to receive
+        detailed 412 validation errors.
+      tags:
+        - Events
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventPayload'
+            examples:
+              identify:
+                summary: Identify a user
+                value:
+                  partnerId: "partner-123"
+                  partnerSecret: "secret-abc"
+                  clientId: "device-session-xyz"
+                  sentAt: 1718000000000
+                  type: identify
+                  context:
+                    name: "simon.js"
+                    version: "2.0.0"
+                  userId: "user-456"
+                  traits:
+                    email: "jane@example.com"
+                    firstName: "Jane"
+                    lastName: "Doe"
+              track_page_view:
+                summary: Track a page view
+                value:
+                  partnerId: "partner-123"
+                  partnerSecret: "secret-abc"
+                  clientId: "device-session-xyz"
+                  sentAt: 1718000000000
+                  type: track
+                  event: page_view
+                  context:
+                    url: "https://example.com/products"
+                    userAgent: "Mozilla/5.0"
+              track_product_view:
+                summary: Track a product view
+                value:
+                  partnerId: "partner-123"
+                  partnerSecret: "secret-abc"
+                  clientId: "device-session-xyz"
+                  sentAt: 1718000000000
+                  type: track
+                  event: product_view
+                  context:
+                    url: "https://example.com/products/widget-blue"
+                  properties:
+                    productId: "sku-001"
+                    productName: "Blue Widget"
+                    price: 29.99
+                    brand: "Acme"
+                    category: "Widgets"
+                    color: "Blue"
+                    quantity: 1
+              track_complete_transaction:
+                summary: Track a completed purchase
+                value:
+                  partnerId: "partner-123"
+                  partnerSecret: "secret-abc"
+                  clientId: "device-session-xyz"
+                  sentAt: 1718000000000
+                  type: track
+                  event: complete_transaction
+                  properties:
+                    transactionId: "order-789"
+                    revenue: 59.98
+                    tax: 5.00
+                    shipping: 4.99
+                    cartItems:
+                      - productId: "sku-001"
+                        productName: "Blue Widget"
+                        price: 29.99
+                        quantity: 2
+      responses:
+        '200':
+          description: Event accepted successfully.
+        '403':
+          description: Domain unrecognized. Verify environment setting.
+        '412':
+          description: Invalid data format or request exceeds size limits.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error. Contact Simon Data support.
+components:
+  schemas:
+    EventPayload:
+      type: object
+      required:
+        - partnerId
+        - partnerSecret
+        - clientId
+        - sentAt
+        - type
+        - context
+      properties:
+        partnerId:
+          type: string
+          description: Internal identifier for the customer's site.
+        partnerSecret:
+          type: string
+          description: Shared secret used for authentication.
+        clientId:
+          type: string
+          maxLength: 45
+          description: Device or session identifier.
+        sentAt:
+          type: integer
+          format: int64
+          description: Timestamp in epoch milliseconds.
+        type:
+          type: string
+          enum:
+            - track
+            - identify
+          description: The command type for this event.
+        ipAddress:
+          type: string
+          description: Optional user device IP address.
+        timezone:
+          type: integer
+          description: Optional UTC offset in minutes.
+        context:
+          $ref: '#/components/schemas/EventContext'
+        userId:
+          type: string
+          description: The user's identifier (used with identify and some track events).
+        traits:
+          $ref: '#/components/schemas/IdentifyTraits'
+        event:
+          type: string
+          description: >
+            Event type name (required when type is `track`). Supported values:
+            page_view, product_view, add_to_cart, cart, update_cart,
+            remove_from_cart, complete_transaction, registration, favorite,
+            waitlist, authentication, custom.
+        properties:
+          $ref: '#/components/schemas/TrackProperties'
+    EventContext:
+      type: object
+      properties:
+        debug:
+          type: boolean
+          description: When true, sends 412 validation errors in response body.
+        name:
+          type: string
+          description: Client library identifier (e.g., simon.js).
+        version:
+          type: string
+          description: Client library version.
+        userAgent:
+          type: string
+          description: Device user agent string.
+        url:
+          type: string
+          description: Page URL where the event originated.
+        page:
+          type: object
+          description: Page context parameters.
+        device:
+          $ref: '#/components/schemas/DeviceContext'
+    DeviceContext:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Device type (e.g., android, ios, kindle, windows).
+    IdentifyTraits:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: User email address (required for identify).
+        firstName:
+          type: string
+        lastName:
+          type: string
+        name:
+          type: string
+        userId:
+          type: string
+        userName:
+          type: string
+        ARN:
+          type: string
+          description: AWS SNS identifier.
+        properties:
+          type: object
+          description: Custom properties object.
+    TrackProperties:
+      type: object
+      description: Event-specific properties. Fields vary by event type.
+      properties:
+        productId:
+          type: string
+        productName:
+          type: string
+        price:
+          type: number
+          format: float
+        brand:
+          type: string
+        category:
+          type: string
+        color:
+          type: string
+        size:
+          type: string
+        style:
+          type: string
+        variant:
+          type: string
+        quantity:
+          type: integer
+        previousQuantity:
+          type: integer
+          description: Used with update_cart events.
+        productImageUrl:
+          type: string
+          format: uri
+        productUrl:
+          type: string
+          format: uri
+        cartItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartItem'
+        transactionId:
+          type: string
+          description: Order/transaction identifier (complete_transaction).
+        revenue:
+          type: number
+          format: float
+        shipping:
+          type: number
+          format: float
+        tax:
+          type: number
+          format: float
+        promotion:
+          type: string
+        email:
+          type: string
+          format: email
+          description: User email (registration/authentication events).
+        username:
+          type: string
+        isLoggedIn:
+          type: boolean
+        optIn:
+          type: boolean
+        ARN:
+          type: string
+        eventName:
+          type: string
+          description: Custom event name (custom events).
+        requiresIdentity:
+          type: boolean
+          description: Whether identity is required (custom events).
+        properties:
+          type: object
+          description: Additional custom properties.
+    CartItem:
+      type: object
+      properties:
+        productId:
+          type: string
+        productName:
+          type: string
+        price:
+          type: number
+          format: float
+        quantity:
+          type: integer
+        brand:
+          type: string
+        category:
+          type: string
+        color:
+          type: string
+        size:
+          type: string
+        variant:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Description of the validation or processing error.

@@ -1,0 +1,16 @@
+{
+  "provider": "simon-data",
+  "sources": [
+    "simon-data-contacts-api-openapi.yml",
+    "simon-data-events-api-openapi.yml"
+  ],
+  "outputs": [
+    "simon-data-contacts-api-openapi.yml",
+    "simon-data-events-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,5 +1,13 @@
 name: Simon Data
-description: Simon Data is an AI-first customer data platform (CDP) that empowers marketing teams with faster, more precise segmentation and personalization. It provides a REST API for managing audiences, activating segments across channels, tracking events via the Simon Signal event collection API, and syncing customer data with downstream marketing tools including Salesforce, Klaviyo, Google Ads, and Facebook.
+description: >-
+  Simon Data — now trading as Simon AI, and acquired by Monetate on 30 July 2026 — is a composable, AI-first customer
+  data platform for marketing teams. It reads customer data directly from a cloud warehouse (Snowflake, BigQuery,
+  Redshift, Azure) without ETL, resolves identity into unified profiles, and activates segments across email, SMS,
+  push, paid media and 70-plus downstream tools including Braze, Iterable, Attentive, Klaviyo, Salesforce Marketing
+  Cloud, Amazon Ads and The Trade Desk. Two callable APIs are published: the Simon Signal Event Ingestion API, which
+  accepts fourteen documented behavioural and transactional event types at a single collect endpoint, and the premium
+  Audience API, which returns one contact profile at a time for send-time personalisation. Outbound webhooks and a
+  Real-Time Content client cover the reverse direction, calling customer endpoints at send time.
 accessModel:
   pricing: enterprise
   onboarding: self-serve
@@ -16,7 +24,7 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/simon-data.png
 url: https://raw.githubusercontent.com/api-evangelist/simon-data/refs/heads/main/apis.yml
 created: '2026-06-13'
-modified: '2026-06-13'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 aid: simon-data
 type: Index
@@ -29,100 +37,172 @@ tags:
   - Data Ingestion
   - Personalization
   - Marketing Technology
+  - Identity Resolution
+  - Customer Profiles
+  - Journey Orchestration
+  - Snowflake
 apis:
-- name: Simon Data Real-Time Content API
-  description: >-
-    A premium API feature that fetches data from an external API at send time to enable dynamic, personalized
-    content delivery across marketing channels. Powers real-time personalization at the moment of message
-    delivery.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.simondata.com/reference/real-time-content
-  baseURL: https://dev.simonsignal.com
-  tags:
-  - Real-Time Content
-  - Personalization
-  - Dynamic Content
-  - Marketing
-  properties:
-  - type: Documentation
-    url: https://docs.simondata.com/reference/real-time-content
-- name: Simon Data Outbound Webhooks API
-  description: >-
-    Enables Simon Data to push customer segment and event data to external systems via webhooks. Supports
-    payload specifications, best practices, and outbound integration authentication for downstream marketing
-    tools and data warehouses.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.simondata.com/reference/getting-started
-  baseURL: https://dev.simonsignal.com
-  tags:
-  - Webhooks
-  - Outbound Integration
-  - Data Sync
-  - Automation
-  properties:
-  - type: Documentation
-    url: https://docs.simondata.com/reference/getting-started
 - aid: simon-data:simon-data-contacts-api
-  name: Simon Data Contacts API
-  description: The Contacts API from Simon Data — 1 operation(s) for contacts.
+  name: Simon Data Audience API
+  description: >-
+    The Simon Audience API returns a single Simon Data contact profile at request time so marketers can personalise
+    content across email, SMS, push and front-of-house tools. Contacts are looked up with an identity string in the
+    form identifier:id (simonid, email, email-hash, primary-subscriber-key, riid, zendeskid) plus a comma-separated
+    list of contact fields. An optional premium feature, authenticated with a bearer token issued by a Simon Client
+    Solutions Manager, and intended for server-side use only.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://docs.simondata.com/reference/getting-started
-  baseURL: https://dev.simonsignal.com/events/v1
+  baseURL: https://api.simondata.com/audience/v2
   tags:
   - Contacts
+  - Audience
+  - Personalization
+  - Customer Profiles
   properties:
   - type: OpenAPI
-    url: openapi/simon-data-contacts-api-openapi.yml
+    url: openapi/simon-data-audience-api-openapi.yml
+  - type: Overlay
+    url: overlays/simon-data-audience-api-overlay.yaml
   - type: Documentation
     url: https://docs.simondata.com/reference/getting-started
-  - type: Documentation
+  - type: APIReference
     url: https://docs.simondata.com/reference/get-a-contact
+  - type: GettingStarted
+    url: https://docs.simondata.com/reference/getting-started
 - aid: simon-data:simon-data-events-api
-  name: Simon Data Events API
-  description: The Events API from Simon Data — 1 operation(s) for events.
-  humanURL: https://docs.simondata.com/reference/getting-started
-  baseURL: https://dev.simonsignal.com/events/v1
+  name: Simon Data Event Ingestion API
+  description: >-
+    Simon Signal is Simon Data's event protocol and event-processing pipeline. The Event Ingestion API accepts a
+    single behavioural or transactional event per request at POST /events/v1/collect across production, staging and
+    development endpoints. Fourteen published event payload types are supported — identify, authentication, cart,
+    add_to_cart, remove_from_cart, update_cart, complete_transaction, page_view, product_view, favorite, search,
+    registration, waitlist and custom. Authentication is a shared partnerSecret carried in the payload.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.simondata.com/reference/event-ingestion-api
+  baseURL: https://simonsignal.com/http/v1
   tags:
   - Events
+  - Event Ingestion
+  - Clickstream
+  - Simon Signal
   properties:
   - type: OpenAPI
-    url: openapi/simon-data-events-api-openapi.yml
+    url: openapi/simon-data-event-ingestion-openapi.yml
+  - type: Overlay
+    url: overlays/simon-data-event-ingestion-overlay.yaml
   - type: Documentation
-    url: https://docs.simondata.com/reference/getting-started
-  - type: Documentation
-    url: https://docs.simondata.com/reference/get-a-contact
+    url: https://docs.simondata.com/reference/event-ingestion-api
+  - type: APIReference
+    url: https://docs.simondata.com/reference/simon-signal-overview
+  - type: Sandbox
+    url: sandbox/simon-data-sandbox.yml
 common:
+  - type: OpenAPI
+    url: openapi/simon-data-audience-api-openapi.yml
+  - type: OpenAPI
+    url: openapi/simon-data-event-ingestion-openapi.yml
+  - type: MCPServer
+    url: mcp/simon-data-mcp.yml
+  - type: WellKnown
+    url: well-known/simon-data-well-known.yml
+  - type: LLMsTxt
+    url: llms/simon-data-llms.txt
+  - type: AgentSkill
+    url: skills/_index.yml
   - type: AgenticAccess
     url: agentic-access/simon-data-agentic-access.yml
-  - type: TrustCenter
-    url: security/simon-data-trust-center.yml
-  - type: DomainSecurity
-    url: security/simon-data-domain-security.yml
   - type: Authentication
     url: authentication/simon-data-authentication.yml
   - type: OAuthScopes
     url: scopes/simon-data-scopes.yml
-  - type: Website
-    url: https://www.simon.ai/
-  - type: Documentation
-    url: https://docs.simondata.com/
-  - type: GitHubOrg
-    url: https://github.com/Radico
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/simon-data
-  - type: X
-    url: https://x.com/simon_data
-  - type: Blog
-    url: https://www.simon.ai/blog
-  - type: Pricing
-    url: https://www.simon.ai/pricing
+  - type: Conventions
+    url: conventions/simon-data-conventions.yml
+  - type: ErrorCatalog
+    url: errors/simon-data-problem-types.yml
+  - type: DataModel
+    url: data-model/simon-data-data-model.yml
+  - type: Lifecycle
+    url: lifecycle/simon-data-lifecycle.yml
   - type: StatusPage
-    url: https://docs.simondata.com/docs/operational-status
+    url: https://status.simondata.com/
+  - type: ChangeLog
+    url: changelog/simon-data-changelog.yml
+  - type: ChangeLog
+    url: https://docs.simondata.com/changelog
+  - type: Webhooks
+    url: asyncapi/simon-data-webhooks.yml
+  - type: Sandbox
+    url: sandbox/simon-data-sandbox.yml
+  - type: Components
+    url: components/simon-data-components.yml
+  - type: Packages
+    url: packages/simon-data-packages.yml
+  - type: Conformance
+    url: conformance/simon-data-conformance.yml
+  - type: Compliance
+    url: https://www.simon.ai/terms/security
+  - type: TrustCenter
+    url: security/simon-data-trust-center.yml
+  - type: Security
+    url: https://www.simon.ai/terms/security
+  - type: VulnerabilityDisclosure
+    url: security/simon-data-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/simon-data-domain-security.yml
+  - type: Examples
+    url: examples/
+  - type: JSONSchema
+    url: json-schema/simon-data-contact-schema.json
+  - type: JSONSchema
+    url: json-schema/simon-data-event-payload-schema.json
+  - type: Vocabulary
+    url: vocabulary/simon-data-vocabulary.yml
+  - type: JSONLD
+    url: json-ld/simon-data-context.jsonld
+  - type: Rules
+    url: rules/simon-data-jsonschema-spectral-rules.yml
   - type: Plans
     url: plans/simon-data-plans-pricing.yml
   - type: RateLimits
     url: rate-limits/simon-data-rate-limits.yml
   - type: FinOps
     url: finops/simon-data-finops.yml
+  - type: Website
+    url: https://www.simon.ai/
+  - type: DeveloperPortal
+    url: https://docs.simondata.com/
+  - type: Documentation
+    url: https://docs.simondata.com/
+  - type: APIReference
+    url: https://docs.simondata.com/reference/getting-started
+  - type: GettingStarted
+    url: https://docs.simondata.com/reference/ingestion-and-egress-in-5-minutes
+  - type: Support
+    url: https://docs.simondata.com/docs/support-center
+  - type: GitHubOrganization
+    url: https://github.com/Radico
+  - type: Blog
+    url: https://www.simon.ai/blog
+  - type: Pricing
+    url: https://www.simon.ai/pricing
+  - type: Login
+    url: https://app.simondata.com/auth/login
+  - type: TermsOfService
+    url: https://www.simon.ai/terms/terms-of-service
+  - type: PrivacyPolicy
+    url: https://www.simon.ai/terms/privacy-policy
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/simon-ai-the-agentic-marketing-platform/
+  - type: X
+    url: https://x.com/simon_data
+  - type: YouTube
+    url: https://www.youtube.com/@simon-ai-marketing-platform
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 37
+  pass: local-v1

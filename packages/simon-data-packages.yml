@@ -1,0 +1,28 @@
+generated: '2026-08-13'
+method: searched
+source: registry.npmjs.org, pypi.org, api.github.com/orgs/Radico, https://docs.simondata.com/
+note: >-
+  Simon Data publishes no first-party client SDK for either of its APIs. npm has no simondata/@simondata package; the
+  npm package literally named `simon.js` is "Simple NodeJS framework" by an unrelated author (skamenetskiy, last
+  published 2022-06-26) and must not be mistaken for Simon Data's browser library. PyPI has no simondata or simon-data
+  package. Simon Data's GitHub organisation (github.com/Radico, display name "Simon AI", 59 public repos) publishes
+  Singer taps that pull data OUT of third-party APIs into Simon (tap-klaviyo, tap-sendgrid, tap-zendesk, tap-bynder,
+  tap-contentful and ~20 more), forks of other vendors' MCP servers, and infrastructure forks — none of them is a client
+  library for the Simon Data API. Integration is by raw HTTP, or by the tenant-hosted Simon.JS tag catalogued in
+  components/. No SDKs pointer is emitted, because there is no SDK.
+packages: []
+package_count: 0
+official_sdk_count: 0
+registries_checked:
+- {registry: npm, query: 'simondata, simon-data, @simondata/*, simonsignal', result: none, checked: '2026-08-13'}
+- {registry: pypi, query: 'simondata, simon-data', result: none, checked: '2026-08-13'}
+- {registry: github, org: Radico, result: 'no client SDK; data-ingestion taps and forks only', checked: '2026-08-13'}
+related_first_party_repos:
+- name: tap-klaviyo
+  url: https://github.com/Radico/tap-klaviyo
+  official: true
+  role: Singer tap that extracts from Klaviyo into Simon. Not a Simon Data API client.
+- name: simon-pygeocoder
+  url: https://github.com/Radico/simon-pygeocoder
+  official: true
+  role: Simon Data fork of the pygeocoder library. Internal tooling, not an API client.

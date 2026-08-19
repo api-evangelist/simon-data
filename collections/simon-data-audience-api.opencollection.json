@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Simon Data Audience API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Contacts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a contact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.simondata.com/audience/v2/contacts",
+            "params": [
+              {
+                "name": "identity",
+                "value": "",
+                "type": "query",
+                "description": "Identifier and ID for the contact requested, in the format identifier:id"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "List of Contact fields that should be returned in the response. For example: fields=first_name,flow_variant_membersip"
+              }
+            ]
+          },
+          "docs": "Retrieve contact information to help personalise a customer's experience. Returns a single contact object; only one contact can be returned per request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

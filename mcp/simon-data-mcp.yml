@@ -1,0 +1,53 @@
+generated: '2026-08-13'
+method: probed
+source: https://app.simondata.com/.well-known/oauth-authorization-server
+status: published
+note: >-
+  Simon Data runs an MCP authorization surface. app.simondata.com publishes RFC 8414 Authorization Server Metadata whose
+  three endpoints are all namespaced under /mcp/oauth/ and which advertises dynamic client registration plus PKCE S256 —
+  the exact discovery shape an MCP client uses to obtain a token for a hosted MCP server. The endpoints are live
+  (GET /mcp/oauth/authorize 302s to the Simon login, /mcp/oauth/token and /mcp/oauth/register return 405 to GET, meaning
+  they exist and require POST). The MCP transport endpoint itself is NOT anonymously discoverable — every candidate path
+  probed under app.simondata.com (/mcp, /mcp/sse, /mcp/http, /mcp/messages, /mcp/rpc, /mcp/stream, /api/mcp, /sse and
+  others) returned the app's HTML 404, and app.simondata.com/robots.txt disallows all crawling. No endpoint URL is
+  recorded here because none was observed; guessing one would assert an agent surface we did not reach.
+  tools/list could therefore not be called, so no tool inventory exists and no tool crosswalk is emitted.
+  Separately, the Simon web app ships a "Connected tools" area at /ai/connected-tools behind the
+  ai.external_mcp_servers feature flag — Simon acting as an MCP *client* against customer-supplied servers. That is a
+  distinct surface from the OAuth server metadata above.
+deployment:
+  mode: remote
+  endpoint: null
+  auth: oauth
+  verified: probed
+server:
+  name: simon-data
+  transport: http
+  url: null
+  authorization_server: https://app.simondata.com
+  authorization_endpoint: https://app.simondata.com/mcp/oauth/authorize
+  token_endpoint: https://app.simondata.com/mcp/oauth/token
+  registration_endpoint: https://app.simondata.com/mcp/oauth/register
+  grant_types: [authorization_code]
+  response_types: [code]
+  code_challenge_methods: [S256]
+  dynamic_client_registration: true
+tools: []
+x-evidence:
+- fetched: '2026-08-13'
+  url: https://app.simondata.com/.well-known/oauth-authorization-server
+  http_status: 200
+  content_type: application/json
+  file: well-known/simon-data-oauth-authorization-server.json
+- fetched: '2026-08-13'
+  url: https://app.simondata.com/mcp/oauth/authorize
+  http_status: 302
+  note: redirects to /auth/login?next=/mcp/oauth/authorize
+- fetched: '2026-08-13'
+  url: https://app.simondata.com/mcp/oauth/token
+  http_status: 405
+  note: method not allowed on GET; endpoint exists
+- fetched: '2026-08-13'
+  url: https://app.simondata.com/mcp
+  http_status: 404
+  note: POST tools/list and POST initialize both returned the app's HTML 404

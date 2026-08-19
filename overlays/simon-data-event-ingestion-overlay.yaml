@@ -1,0 +1,34 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Simon Data Event Ingestion API
+  version: 1.0.0
+extends: openapi/simon-data-event-ingestion-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: >-
+  Simon Data publishes fourteen separate OpenAPI definitions on its ReadMe hub, one per Simon Signal event type, all
+  bound to the same POST /events/v1/collect operation. Each is preserved verbatim in
+  openapi/_original/simon-data-readme-*-openapi.json. This overlay records the merge: the fourteen definitions are
+  expressed as one operation whose request body is a oneOf across the fourteen published event schemas, because the
+  provider ships one endpoint, not fourteen. The provider's per-event operationIds are preserved on the merged
+  operation under x-published-event-operations. Servers are taken from the environment table in the Event Ingestion API
+  reference, which names production, staging and development collect endpoints; the per-event definitions list only
+  staging and development.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-08-13'
+    x-apievangelist-source: https://docs.simondata.com/reference/event-ingestion-api
+    x-apievangelist-merged-from: 14 published per-event OpenAPI definitions
+- target: "$.paths['/events/v1/collect'].post"
+  update:
+    tags: [Events]
+    x-apievangelist-debug-mode: >-
+      Set context.debug to true to receive HTTP 412 validation errors; when false, validation exceptions are silent and
+      the event is discarded.
+    x-apievangelist-payload-limit: 100 KB per event
+- target: $.servers
+  update:
+    x-apievangelist-note: >-
+      Production endpoint https://simonsignal.com/http/v1 added from the environment table in the Event Ingestion API
+      reference; the provider's per-event definitions omit it.

@@ -1,0 +1,56 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.simondata.com/changelog
+url: https://docs.simondata.com/changelog
+scheme: dated-release-notes
+cadence: monthly-to-quarterly
+note: >-
+  Simon Data publishes a dated product changelog on its ReadMe docs hub. Entries are product/release notes covering the
+  app, integrations and syncs; they are not API-versioned and breaking API changes are not called out separately. Recent
+  window captured below, newest first.
+entries:
+- date: '2026-07'
+  title: 'July 2026: Content Blocks Refresh'
+  url: https://docs.simondata.com/changelog/july-2026-content-blocks-refresh
+  breaking: false
+  highlights:
+  - Content Blocks tab in template and journey editors rebuilt with search, preview, tags and an explicit Insert action.
+  - Fixed event fields rendering as unfilled placeholders in flow custom contexts, in preview and at send time.
+- date: '2026-05'
+  title: 'May 2026: Release Notes'
+  url: https://docs.simondata.com/changelog/may-2026-release-notes
+  breaking: false
+  highlights:
+  - Three HubSpot actions added to the Activate Flows builder (transactional email, automation enrolment, list sync).
+  - Activate Flows generally available.
+  - Salesforce Marketing Cloud sfmc_id now populated from email for orgs on use_subscriber_key_as_email.
+  - Pinterest audience and customer-list syncs tolerate unknown response fields instead of failing the call.
+  - Salesforce OAuth2 client-credentials webhook flow fixed.
+- date: '2026-04'
+  title: 'April 2026: Movable Ink Da Vinci and Rokt integrations'
+  url: https://docs.simondata.com/changelog/april-2026-movable-ink-da-vinci-and-rokt-integrations
+  breaking: false
+- date: '2026-Q1'
+  title: 'Q1 2026: Integration Updates, Reporting, and Search Improvements'
+  url: https://docs.simondata.com/changelog/q1-2026-integration-updates-reporting-and-search-improvements
+  breaking: false
+- date: '2025-10'
+  title: 'October 2025: New Oracle Hospitality Integration, Journeys Pausing'
+  url: https://docs.simondata.com/changelog/october-2025
+  breaking: false
+- date: '2025-09'
+  title: 'September 2025: Privacy Request Expirations'
+  url: https://docs.simondata.com/changelog/september-2025
+  breaking: false
+- date: '2025-08'
+  title: 'August 2025: Support for user aliases within Braze integration'
+  url: https://docs.simondata.com/changelog/august-2025-support-for-user-aliases-within-braze-integration
+  breaking: false
+- date: '2025-07'
+  title: 'July 2025: Amazon Ads Integration'
+  url: https://docs.simondata.com/changelog/july-2025
+  breaking: false
+- date: '2025-06'
+  title: 'June 2025: AI Model Upgrade, Klaviyo API Enhancement'
+  url: https://docs.simondata.com/changelog/june-2025
+  breaking: false

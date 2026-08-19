@@ -1,0 +1,215 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "search-event",
+    "version": "2.0"
+  },
+  "servers": [
+    {
+      "url": "https://dev.simonsignal.com"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "sec0": {
+        "type": "oauth2",
+        "flows": {}
+      }
+    }
+  },
+  "security": [
+    {
+      "sec0": []
+    }
+  ],
+  "paths": {
+    "/events/v1/collect": {
+      "post": {
+        "summary": "Search Event",
+        "description": "",
+        "operationId": "search-event",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "term": {
+                    "type": "string"
+                  },
+                  "properties": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "searchItems": {
+                    "properties": {
+                      "productId": {
+                        "type": "string"
+                      },
+                      "variant": {
+                        "type": "string"
+                      },
+                      "productImageUrl": {
+                        "type": "string"
+                      },
+                      "brand": {
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "string"
+                      },
+                      "color": {
+                        "type": "string"
+                      },
+                      "productName": {
+                        "type": "string"
+                      },
+                      "size": {
+                        "type": "string"
+                      },
+                      "style": {
+                        "type": "string"
+                      },
+                      "price": {
+                        "type": "string"
+                      },
+                      "properties": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [],
+                    "type": "object"
+                  },
+                  "event": {
+                    "type": "string",
+                    "description": "Event type: page_view, etc"
+                  },
+                  "partnerId": {
+                    "type": "string",
+                    "description": "The internal partnerId Simon uses to identify the customer's site."
+                  },
+                  "context": {
+                    "type": "object",
+                    "description": "A dictionary containing optional fields about the context of the event.",
+                    "properties": {}
+                  },
+                  "clientId": {
+                    "type": "string",
+                    "description": "A unique identifier for the device. If no unique identifier for the device can be maintained this may be a unique identifier for the current session (max length: 45 characters)."
+                  },
+                  "partnerSecret": {
+                    "type": "string",
+                    "description": "The shared secret used for authentication."
+                  },
+                  "ipAddress": {
+                    "type": "string",
+                    "description": "The public IP address of the user's device if available."
+                  },
+                  "sentAt": {
+                    "type": "integer",
+                    "description": "Epoch time in milliseconds of when the request was sent. Epoch time is the number of milliseconds that have elapsed since January 1, 1970 (midnight UTC/GMT).",
+                    "format": "int32"
+                  },
+                  "timezone": {
+                    "type": "integer",
+                    "description": "The time difference between UTC time and local time, in minutes. See https://www.w3schools.com/jsref/jsref_gettimezoneoffset.asp for an example.",
+                    "format": "int32"
+                  },
+                  "traits": {
+                    "type": "object",
+                    "properties": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": "Success (Returns no JSON)"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Invalid JSON Body": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Unauthorized": {
+                    "value": ""
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "403",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": ""
+                  }
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "412",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Invalid request data": {
+                    "value": ""
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "Result": {
+                    "value": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [],
+    "explorer-enabled": false,
+    "proxy-enabled": false
+  },
+  "x-readme-fauxas": true
+}

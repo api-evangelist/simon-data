@@ -1,0 +1,346 @@
+{
+  "item": [
+    {
+      "id": "0eeb22cc-a5b2-4019-bec0-f5d09caf7360",
+      "name": "Events",
+      "description": {
+        "content": "Event collection into the Simon Signal pipeline.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9bfd5f51-6c28-4127-bdf3-abfecf0aa55d",
+          "name": "Collect an event",
+          "request": {
+            "name": "Collect an event",
+            "description": {
+              "content": "Accepts a single Simon Signal event. The request body must match one of the fourteen published event payload schemas. Authentication is the shared partnerSecret carried in the payload.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "events",
+                "v1",
+                "collect"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7263a3a0-b53c-49cb-8a78-6dc0d243244b",
+              "name": "Success (Returns no JSON)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "v1",
+                    "collect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"<string>\",\n  \"context\": {\n    \"debug\": \"<boolean>\",\n    \"name\": \"<string>\",\n    \"version\": \"<string>\",\n    \"userAgent\": \"<string>\",\n    \"page\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"page.url\": \"<string>\",\n    \"device\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"device.type\": \"<string>\"\n  },\n  \"event\": \"<string>\",\n  \"partnerId\": \"<string>\",\n  \"partnerSecret\": \"<string>\",\n  \"properties\": {\n    \"productId\": \"<string>\",\n    \"variant\": \"<string>\",\n    \"quantity\": \"<number>\",\n    \"cartItems\": [\n      {\n        \"quantity\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"productId\": \"string\",\n        \"variant\": \"string\"\n      },\n      {\n        \"quantity\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"productId\": 2100,\n        \"variant\": 1261.5532421345\n      }\n    ],\n    \"productImageUrl\": \"<string>\",\n    \"productUrl\": \"<string>\",\n    \"brand\": \"<string>\",\n    \"category\": \"<string>\",\n    \"color\": \"<string>\",\n    \"productName\": \"<string>\",\n    \"size\": \"<string>\",\n    \"style\": \"<string>\",\n    \"price\": \"<number>\",\n    \"properties\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  },\n  \"sentAt\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"traits\": {\n    \"email\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"name\": \"<string>\",\n    \"userId\": \"<string>\",\n    \"username\": \"<string>\",\n    \"ARN\": \"<string>\",\n    \"properties\": {\n      \"key_0\": {}\n    }\n  },\n  \"ipAddress\": \"<string>\",\n  \"timezone\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9f4113d0-d44a-4b38-9db7-5d39a88e6628",
+              "name": "Invalid JSON body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "v1",
+                    "collect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"<string>\",\n  \"context\": {\n    \"debug\": \"<boolean>\",\n    \"name\": \"<string>\",\n    \"version\": \"<string>\",\n    \"userAgent\": \"<string>\",\n    \"page\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"page.url\": \"<string>\",\n    \"device\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"device.type\": \"<string>\"\n  },\n  \"event\": \"<string>\",\n  \"partnerId\": \"<string>\",\n  \"partnerSecret\": \"<string>\",\n  \"properties\": {\n    \"productId\": \"<string>\",\n    \"variant\": \"<string>\",\n    \"quantity\": \"<number>\",\n    \"cartItems\": [\n      {\n        \"quantity\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"productId\": \"string\",\n        \"variant\": \"string\"\n      },\n      {\n        \"quantity\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"productId\": 2100,\n        \"variant\": 1261.5532421345\n      }\n    ],\n    \"productImageUrl\": \"<string>\",\n    \"productUrl\": \"<string>\",\n    \"brand\": \"<string>\",\n    \"category\": \"<string>\",\n    \"color\": \"<string>\",\n    \"productName\": \"<string>\",\n    \"size\": \"<string>\",\n    \"style\": \"<string>\",\n    \"price\": \"<number>\",\n    \"properties\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  },\n  \"sentAt\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"traits\": {\n    \"email\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"name\": \"<string>\",\n    \"userId\": \"<string>\",\n    \"username\": \"<string>\",\n    \"ARN\": \"<string>\",\n    \"properties\": {\n      \"key_0\": {}\n    }\n  },\n  \"ipAddress\": \"<string>\",\n  \"timezone\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid JSON body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aea6ef42-5fb5-4008-a74b-fb61af449001",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "v1",
+                    "collect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"<string>\",\n  \"context\": {\n    \"debug\": \"<boolean>\",\n    \"name\": \"<string>\",\n    \"version\": \"<string>\",\n    \"userAgent\": \"<string>\",\n    \"page\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"page.url\": \"<string>\",\n    \"device\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"device.type\": \"<string>\"\n  },\n  \"event\": \"<string>\",\n  \"partnerId\": \"<string>\",\n  \"partnerSecret\": \"<string>\",\n  \"properties\": {\n    \"productId\": \"<string>\",\n    \"variant\": \"<string>\",\n    \"quantity\": \"<number>\",\n    \"cartItems\": [\n      {\n        \"quantity\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"productId\": \"string\",\n        \"variant\": \"string\"\n      },\n      {\n        \"quantity\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"productId\": 2100,\n        \"variant\": 1261.5532421345\n      }\n    ],\n    \"productImageUrl\": \"<string>\",\n    \"productUrl\": \"<string>\",\n    \"brand\": \"<string>\",\n    \"category\": \"<string>\",\n    \"color\": \"<string>\",\n    \"productName\": \"<string>\",\n    \"size\": \"<string>\",\n    \"style\": \"<string>\",\n    \"price\": \"<number>\",\n    \"properties\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  },\n  \"sentAt\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"traits\": {\n    \"email\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"name\": \"<string>\",\n    \"userId\": \"<string>\",\n    \"username\": \"<string>\",\n    \"ARN\": \"<string>\",\n    \"properties\": {\n      \"key_0\": {}\n    }\n  },\n  \"ipAddress\": \"<string>\",\n  \"timezone\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40d2bf26-2d7b-466e-a308-5c525bce2363",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "v1",
+                    "collect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"<string>\",\n  \"context\": {\n    \"debug\": \"<boolean>\",\n    \"name\": \"<string>\",\n    \"version\": \"<string>\",\n    \"userAgent\": \"<string>\",\n    \"page\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"page.url\": \"<string>\",\n    \"device\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"device.type\": \"<string>\"\n  },\n  \"event\": \"<string>\",\n  \"partnerId\": \"<string>\",\n  \"partnerSecret\": \"<string>\",\n  \"properties\": {\n    \"productId\": \"<string>\",\n    \"variant\": \"<string>\",\n    \"quantity\": \"<number>\",\n    \"cartItems\": [\n      {\n        \"quantity\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"productId\": \"string\",\n        \"variant\": \"string\"\n      },\n      {\n        \"quantity\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"productId\": 2100,\n        \"variant\": 1261.5532421345\n      }\n    ],\n    \"productImageUrl\": \"<string>\",\n    \"productUrl\": \"<string>\",\n    \"brand\": \"<string>\",\n    \"category\": \"<string>\",\n    \"color\": \"<string>\",\n    \"productName\": \"<string>\",\n    \"size\": \"<string>\",\n    \"style\": \"<string>\",\n    \"price\": \"<number>\",\n    \"properties\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  },\n  \"sentAt\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"traits\": {\n    \"email\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"name\": \"<string>\",\n    \"userId\": \"<string>\",\n    \"username\": \"<string>\",\n    \"ARN\": \"<string>\",\n    \"properties\": {\n      \"key_0\": {}\n    }\n  },\n  \"ipAddress\": \"<string>\",\n  \"timezone\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Forbidden\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c980d821-84dc-4a1c-8bca-f7cbe4a4b8bb",
+              "name": "Invalid request data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "v1",
+                    "collect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"<string>\",\n  \"context\": {\n    \"debug\": \"<boolean>\",\n    \"name\": \"<string>\",\n    \"version\": \"<string>\",\n    \"userAgent\": \"<string>\",\n    \"page\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"page.url\": \"<string>\",\n    \"device\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"device.type\": \"<string>\"\n  },\n  \"event\": \"<string>\",\n  \"partnerId\": \"<string>\",\n  \"partnerSecret\": \"<string>\",\n  \"properties\": {\n    \"productId\": \"<string>\",\n    \"variant\": \"<string>\",\n    \"quantity\": \"<number>\",\n    \"cartItems\": [\n      {\n        \"quantity\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"productId\": \"string\",\n        \"variant\": \"string\"\n      },\n      {\n        \"quantity\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"productId\": 2100,\n        \"variant\": 1261.5532421345\n      }\n    ],\n    \"productImageUrl\": \"<string>\",\n    \"productUrl\": \"<string>\",\n    \"brand\": \"<string>\",\n    \"category\": \"<string>\",\n    \"color\": \"<string>\",\n    \"productName\": \"<string>\",\n    \"size\": \"<string>\",\n    \"style\": \"<string>\",\n    \"price\": \"<number>\",\n    \"properties\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  },\n  \"sentAt\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"traits\": {\n    \"email\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"name\": \"<string>\",\n    \"userId\": \"<string>\",\n    \"username\": \"<string>\",\n    \"ARN\": \"<string>\",\n    \"properties\": {\n      \"key_0\": {}\n    }\n  },\n  \"ipAddress\": \"<string>\",\n  \"timezone\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Precondition Failed",
+              "code": 412,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unknown event type: collect.track\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38ccaaa0-5286-4800-84f3-e95495ff6b80",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "events",
+                    "v1",
+                    "collect"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientId\": \"<string>\",\n  \"context\": {\n    \"debug\": \"<boolean>\",\n    \"name\": \"<string>\",\n    \"version\": \"<string>\",\n    \"userAgent\": \"<string>\",\n    \"page\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"page.url\": \"<string>\",\n    \"device\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    },\n    \"device.type\": \"<string>\"\n  },\n  \"event\": \"<string>\",\n  \"partnerId\": \"<string>\",\n  \"partnerSecret\": \"<string>\",\n  \"properties\": {\n    \"productId\": \"<string>\",\n    \"variant\": \"<string>\",\n    \"quantity\": \"<number>\",\n    \"cartItems\": [\n      {\n        \"quantity\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"productId\": \"string\",\n        \"variant\": \"string\"\n      },\n      {\n        \"quantity\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"productId\": 2100,\n        \"variant\": 1261.5532421345\n      }\n    ],\n    \"productImageUrl\": \"<string>\",\n    \"productUrl\": \"<string>\",\n    \"brand\": \"<string>\",\n    \"category\": \"<string>\",\n    \"color\": \"<string>\",\n    \"productName\": \"<string>\",\n    \"size\": \"<string>\",\n    \"style\": \"<string>\",\n    \"price\": \"<number>\",\n    \"properties\": {\n      \"key_0\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      },\n      \"key_1\": {\n        \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n      }\n    }\n  },\n  \"sentAt\": \"<integer>\",\n  \"type\": \"<string>\",\n  \"userId\": \"<string>\",\n  \"traits\": {\n    \"email\": \"<string>\",\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"name\": \"<string>\",\n    \"userId\": \"<string>\",\n    \"username\": \"<string>\",\n    \"ARN\": \"<string>\",\n    \"properties\": {\n      \"key_0\": {}\n    }\n  },\n  \"ipAddress\": \"<string>\",\n  \"timezone\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Internal Server Error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://simonsignal.com/http/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "416335d6-3b17-4718-b9f9-6ef0dc5f85f8",
+    "name": "Simon Data Event Ingestion API (Simon Signal)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Simon Signal is Simon Data's event protocol and event-processing pipeline. The Event Ingestion API accepts a single behavioural or transactional event per request at POST /events/v1/collect. Every payload carries partnerId, partnerSecret, clientId, sentAt, type (track or identify) and a context object; the event-specific body varies by event type. Events larger than 100 KB are rejected. Set context.debug to true to receive detailed HTTP 412 validation errors.\n\nThis document is a faithful merge of the fourteen per-event OpenAPI definitions Simon Data publishes on its ReadMe developer hub (one definition per event type, all bound to the same POST /events/v1/collect operation). The per-event definitions are preserved verbatim in openapi/_original/simon-data-readme-*-openapi.json; the merge expresses them as a single operation whose request body is a oneOf across the fourteen published event schemas, because the provider ships one endpoint, not fourteen.\n\nContact Support:\n Name: Simon Data Support",
+      "type": "text/plain"
+    }
+  }
+}

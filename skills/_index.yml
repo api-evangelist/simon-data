@@ -1,0 +1,15 @@
+generated: '2026-08-13'
+method: generated
+source: openapi/simon-data-event-ingestion-openapi.yml, openapi/simon-data-audience-api-openapi.yml
+note: >-
+  Two skills, one per callable Simon Data API. Both are grounded in operationIds verified in the harvested specs
+  (collectEvent, get-a-contact). Simon Data publishes no AGENTS.md or provider-authored skill files.
+skills:
+- file: simon-data-collect-signal-event.md
+  name: Collect a Simon Signal event
+  api: openapi/simon-data-event-ingestion-openapi.yml
+  operations: [collectEvent]
+- file: simon-data-lookup-contact-for-personalization.md
+  name: Look up a Simon Data contact for personalisation
+  api: openapi/simon-data-audience-api-openapi.yml
+  operations: [get-a-contact]

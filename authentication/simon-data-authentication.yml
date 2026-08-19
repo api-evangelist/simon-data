@@ -1,18 +1,60 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/simon-data-contact-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: https://docs.simondata.com/reference/getting-started
+docs: https://docs.simondata.com/reference/getting-started
+note: >-
+  Upgraded from a derived profile that reported an oauth2 clientCredentials flow with a token URL of
+  https://api.simondata.com/oauth/token. That token URL appears nowhere in Simon Data's documentation and came from a
+  scaffolded spec, which has been removed. Simon Data's own OpenAPI on its ReadMe hub declares a placeholder oauth2
+  scheme with an empty flows object; the Getting Started page states plainly that the Audience API uses bearer-token
+  authentication with a token issued by a Client Solutions Manager. The Event Ingestion API does not use a header at
+  all — it authenticates with a shared partnerSecret carried inside the JSON payload.
 summary:
-  types:
-  - oauth2
-  oauth2_flows:
-  - clientCredentials
+  types: [http, apiKey, oauth2]
+  api_key_in: [body]
+  oauth2_flows: [authorizationCode]
 schemes:
-- name: oauth2
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  api: Simon Data Audience API
+  in: header
+  parameter: Authorization
+  description: >-
+    Bearer token issued by a Simon Data Client Solutions Manager, sent as `Authorization: Bearer <token>`. Tokens are
+    requested, rotated and deleted through a support ticket; Simon documents that tokens must never be sent by email or
+    Slack and should be referenced by their last three digits. Server-side use only — Simon explicitly recommends
+    against calling the Audience API from client-side applications.
+  docs: https://docs.simondata.com/reference/getting-started
+  sources: [openapi/simon-data-audience-api-openapi.yml]
+- name: partnerSecret
+  type: apiKey
+  in: body
+  parameter: partnerSecret
+  api: Simon Data Event Ingestion API
+  description: >-
+    Shared secret carried in the event payload alongside partnerId, which identifies the customer's site. Both values
+    are issued by Simon and shown in the app under Admin Center > Signal Installation. Because the secret travels in the
+    body of a browser-originated collect call when Simon.JS is used, it is a site-scoped write credential, not a
+    confidential server credential.
+  docs: https://docs.simondata.com/reference/event-ingestion-api
+  sources: [openapi/simon-data-event-ingestion-openapi.yml]
+- name: mcp-oauth
   type: oauth2
+  api: Simon Data MCP surface
   flows:
-  - flow: clientCredentials
-    tokenUrl: https://api.simondata.com/oauth/token
+  - flow: authorizationCode
+    authorizationUrl: https://app.simondata.com/mcp/oauth/authorize
+    tokenUrl: https://app.simondata.com/mcp/oauth/token
+    registrationUrl: https://app.simondata.com/mcp/oauth/register
+    pkce: S256
     scopes: 0
-  description: OAuth 2.0 authentication required for all endpoints.
-  sources:
-  - openapi/simon-data-contact-openapi.yml
+  description: >-
+    OAuth 2.0 authorization-code flow with PKCE and dynamic client registration, published as RFC 8414 metadata at
+    https://app.simondata.com/.well-known/oauth-authorization-server. No scopes are advertised in the metadata document.
+  sources: [well-known/simon-data-oauth-authorization-server.json]
+outbound:
+  note: >-
+    For outbound integrations and webhooks Simon is the client, not the server. Simon supports OAuth2 on outbound
+    webhook destinations and will automatically re-authenticate and retry on 401, 403 or 419 responses.
+  docs: https://docs.simondata.com/reference/outbound-integration-authentication

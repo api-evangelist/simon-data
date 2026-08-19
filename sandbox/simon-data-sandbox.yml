@@ -1,0 +1,43 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.simondata.com/reference/event-ingestion-api
+docs: https://docs.simondata.com/reference/event-ingestion-api
+note: >-
+  Simon Data ships environment separation rather than test credentials. There are no test tokens, no magic identifiers
+  and no fixture generator; a customer tests against the dev or staging Simon Signal endpoint with their own partnerId
+  and partnerSecret. The Audience API has no sandbox at all. NO test values are published, and none are invented here.
+environments:
+- name: production
+  api: Event Ingestion
+  endpoint: https://simonsignal.com/http/v1/collect
+- name: staging
+  api: Event Ingestion
+  endpoint: https://staging.simonsignal.com/http/v1/collect
+- name: development
+  api: Event Ingestion
+  endpoint: https://dev.simonsignal.com/http/v1/collect
+  note: The published per-event API reference examples all target the dev environment.
+mode_selection:
+  mechanism: endpoint host
+  client_side: >-
+    Simon.JS reads an `environment` config value (defaults to prod, and Simon documents that it must be set to prod to
+    function properly).
+debug_mode:
+  field: context.debug
+  type: boolean
+  default: false
+  effect: >-
+    When true the Event Ingestion API returns validation failures as HTTP 412 with a descriptive error string. When
+    false, validation exceptions are silent — the request succeeds at the wire level and the event is discarded. Debug
+    mode is the only way to see why an event was rejected.
+  docs: https://docs.simondata.com/reference/event-ingestion-api
+test_values: []
+test_credentials:
+  issued_by: Simon account manager / Admin Center > Signal Installation
+  published: false
+  note: partnerId and partnerSecret are per-customer and are not published.
+webhook_testing:
+  approach: >-
+    Simon documents testing an outbound webhook destination with an external client (Postman, Pipedream) before pasting
+    the payload into the Simon channel action.
+  docs: https://docs.simondata.com/reference/test-webhook-payloads-1

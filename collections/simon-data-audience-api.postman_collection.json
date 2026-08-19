@@ -1,0 +1,349 @@
+{
+  "item": [
+    {
+      "id": "26cd5b0f-ae46-49b2-ab4b-5264b7f6df07",
+      "name": "Contacts",
+      "description": {
+        "content": "Contact profile lookup.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1fa6922e-76b8-4c64-bf01-ad3f4808bb4d",
+          "name": "Get a contact",
+          "request": {
+            "name": "Get a contact",
+            "description": {
+              "content": "Retrieve contact information to help personalise a customer's experience. Returns a single contact object; only one contact can be returned per request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "contacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "identity",
+                  "value": "email:tom@hello.com",
+                  "description": "(Required) Identifier and ID for the contact requested, in the format identifier:id"
+                },
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "fields=first_name,flow_variant_membership",
+                  "description": "(Required) List of Contact fields that should be returned in the response. For example: fields=first_name,flow_variant_membersip"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb923c00-e01c-42b9-9efa-89660c32bfa4",
+              "name": "200",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identity",
+                      "value": "email:tom@hello.com"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "fields=first_name,flow_variant_membership"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{\\n  \\\"status\\\": \\\"success\\\",\\n  \\\"contact\\\": {\\n    \\\"email_address\\\": \\\"tom@hello.com\\\",\\n    \\\"first_name\\\": \\\"Tom\\\",\\n    \\\"address_city\\\": \\\"New York\\\",\\n    \\\"address_state\\\": \\\"NY\\\",\\n    \\\"flow_variant_membership\\\": [\\n      \\\"142309\\\",\\n      \\\"203850-Variant A\\\"\\n    ],\\n    \\\"total_lifetime_value_jde\\\": \\\"$241.56\\\"\\n  }\\n}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3355cbf2-2b87-4449-904e-3fce3e1eb59d",
+              "name": "400",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identity",
+                      "value": "email:tom@hello.com"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "fields=first_name,flow_variant_membership"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"{}\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63868e84-768f-4464-a30c-90c7e3939a2d",
+              "name": "403",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identity",
+                      "value": "email:tom@hello.com"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "fields=first_name,flow_variant_membership"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "906d1e55-05f8-4598-8846-8707858919b5",
+              "name": "429",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identity",
+                      "value": "email:tom@hello.com"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "fields=first_name,flow_variant_membership"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acdc428d-b0c8-49c0-a114-33c7fe491e86",
+              "name": "500",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "contacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "identity",
+                      "value": "email:tom@hello.com"
+                    },
+                    {
+                      "key": "fields",
+                      "value": "fields=first_name,flow_variant_membership"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.simondata.com/audience/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ebc36689-7e66-4051-b205-8ddb59c4f8f6",
+    "name": "Simon Data Audience API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Simon Audience API returns a single Simon Data contact profile so marketers can personalise content at request time. Look a contact up with an identity string in the form identifier:id (simonid, email, email-hash, primary-subscriber-key for Salesforce Marketing Cloud, riid for Responsys, or zendeskid for Zendesk) and a comma-separated list of the contact fields to return. Only fields configured as content in the Simon account appear in the response. The Audience API is an optional premium feature; access is arranged with a Simon account manager. Authentication is a bearer token issued by a Client Solutions Manager, and the API is intended for server-side use only.\n\nContact Support:\n Name: Simon Data Support",
+      "type": "text/plain"
+    }
+  }
+}

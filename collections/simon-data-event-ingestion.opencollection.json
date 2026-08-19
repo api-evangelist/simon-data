@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Simon Data Event Ingestion API (Simon Signal)",
+    "version": "1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Collect an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://simonsignal.com/http/v1/events/v1/collect",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts a single Simon Signal event. The request body must match one of the fourteen published event payload schemas. Authentication is the shared partnerSecret carried in the payload."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

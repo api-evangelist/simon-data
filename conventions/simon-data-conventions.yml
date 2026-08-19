@@ -1,0 +1,76 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.simondata.com/reference/getting-started, https://docs.simondata.com/reference/event-ingestion-api, https://docs.simondata.com/reference/webhook-best-practices-1
+authentication:
+  style: mixed
+  audience_api: 'HTTP bearer token in the Authorization header'
+  event_api: 'shared partnerSecret carried inside the JSON request body, with partnerId identifying the site'
+  detail: authentication/simon-data-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Simon Data documents no idempotency key, no request deduplication window and no safe-retry contract on either API.
+    Event Ingestion accepts one event per POST with a client-supplied `sentAt` epoch and a `clientId`, but neither is
+    documented as a dedupe key. A retried collect call is a second event. Recorded as an explicit absence — no
+    Idempotency pointer is emitted for this provider.
+pagination:
+  supported: false
+  note: >-
+    Neither published operation is a collection. The Audience API returns exactly one contact per request and states
+    that only one contact object can be returned at a time; the Event Ingestion API accepts one event per request.
+field_selection:
+  supported: true
+  api: Audience
+  parameter: fields
+  style: comma-separated allowlist
+  example: fields=first_name,flow_variant_membership
+  note: >-
+    Field selection is mandatory, not optional — the Audience API requires the caller to name the contact fields to
+    return, and a field only appears if it is configured as "content" in the Simon account. The response shape is
+    therefore tenant-specific and cannot be described statically.
+identity_resolution:
+  parameter: identity
+  format: 'identifier:id'
+  identifiers: [simonid, email, email-hash, primary-subscriber-key, riid, zendeskid]
+  note: >-
+    primary-subscriber-key is Salesforce Marketing Cloud, riid is Responsys, zendeskid is Zendesk — the lookup key
+    doubles as a cross-platform identity bridge.
+metadata:
+  supported: true
+  api: Event Ingestion
+  fields: [context, traits.properties, properties]
+  note: Arbitrary extra arguments travel in `properties` objects; `context` carries client library, page and device data.
+request_tracing:
+  request_id_header: null
+  note: No request-id or correlation header is documented on either API.
+versioning:
+  style: uri-path
+  detail: lifecycle/simon-data-lifecycle.yml
+errors:
+  envelope: '{"error": "<message>"}'
+  problem_json: false
+  detail: errors/simon-data-problem-types.yml
+rate_limits:
+  signalled_via: null
+  note: >-
+    A 50 request/second organisation-wide limit is documented for the Audience API and a 429 is returned on exhaustion,
+    but Simon documents no RateLimit-* or Retry-After response headers, so an agent cannot read remaining budget from a
+    response. Detail in rate-limits/simon-data-rate-limits.yml.
+payload_limits:
+- surface: Event Ingestion
+  limit: 100 KB per event
+- surface: Outbound webhook POST
+  limit: 2 MB body (2,097,152 bytes)
+- surface: Outbound webhook GET
+  limit: 2,048 character URL
+retries:
+  direction: outbound
+  note: >-
+    Simon's own retry contract applies to the webhooks it sends, not to calls you make to it. Simon retries 429 and 5xx
+    three times with exponential backoff, ignores 30x and other 4xx, and re-authenticates then retries on 401/403/419
+    when the destination uses OAuth2. Failures are logged as sync failures.
+  docs: https://docs.simondata.com/reference/webhook-best-practices-1
+nested_json:
+  notation: dot
+  note: 'A webhook payload key of outer.inner.value becomes {"outer": {"inner": {"value": ...}}}. JSON-encoded parameters only, not form-encoded.'

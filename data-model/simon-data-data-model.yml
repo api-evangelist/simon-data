@@ -1,0 +1,82 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/simon-data-event-ingestion-openapi.yml, openapi/simon-data-audience-api-openapi.yml
+note: >-
+  Derived from the $ref graph of Simon Data's own published event schemas plus the Audience API response shape. The
+  Simon Signal model is compositional rather than relational: every event schema is an allOf of core_event (the
+  envelope) and track_event or identify_event (the type discriminator), then adds its own properties. There are no id
+  reference fields between resources, because there is only one write endpoint and one read endpoint — identity is
+  carried by natural keys (partnerId, clientId, userId, traits.email), not by opaque resource ids.
+entities:
+- name: core_event
+  role: envelope
+  description: Required envelope on every Simon Signal event.
+  required: [partnerId, partnerSecret, clientId, context, sentAt, type]
+  keys:
+  - {field: partnerId, kind: tenant-key, description: Internal Simon identifier for the customer's site.}
+  - {field: clientId, kind: device-or-session-key, max_length: 45}
+  - {field: partnerSecret, kind: credential}
+  discriminator: {field: type, values: [track, identify]}
+- name: context
+  role: embedded
+  description: Client library, page and device context for an event.
+  fields: [debug, name, version, userAgent, page, page.url, device, device.type]
+- name: traits
+  role: embedded
+  description: Person-level attributes attached to an event.
+  required: [email]
+  fields: [email, firstName, lastName, name, userId, username, ARN, properties]
+- name: cartitem
+  role: embedded
+  description: Product line without quantity.
+  fields: [productId, variant, productImageUrl, productUrl, brand, category, color, productName, size, style, price, properties]
+- name: cartitem_with_quantity
+  role: embedded
+  description: Product line with quantity; used by cart-shaped events.
+- name: track_event
+  role: abstract
+  description: Behavioural event base, composed with core_event.
+- name: identify_event
+  role: concrete
+  description: Person-resolution event carrying traits.
+- name: contact
+  role: read-model
+  api: Audience
+  description: >-
+    The contact profile returned by GET /contacts. Its properties are tenant-specific — a field appears only if it is
+    configured as "content" in the Simon account — so the schema is open by design. Observed in the published example:
+    email_address, first_name, address_city, address_state, flow_variant_membership, total_lifetime_value_jde.
+  keys:
+  - {field: identity, kind: lookup-key, format: 'identifier:id'}
+event_types:
+- {name: identify, schema: identify_event, operation: identifyEvent}
+- {name: authentication, schema: authentication_event, operation: authenticationEvent}
+- {name: registration, schema: registration_event, operation: registrationEvent}
+- {name: page_view, schema: page_view_event, operation: page_viewEvent}
+- {name: product_view, schema: product_view_event, operation: product_viewEvent}
+- {name: search, schema: search_event, operation: search-event}
+- {name: favorite, schema: favorite_event, operation: favoriteEvent}
+- {name: waitlist, schema: waitlist_event, operation: waitlistEvent}
+- {name: cart, schema: cart_event, operation: cartEvent}
+- {name: add_to_cart, schema: add_to_cart_event, operation: add_to_cartEvent}
+- {name: remove_from_cart, schema: remove_from_cart_event, operation: remove_from_cartEvent}
+- {name: update_cart, schema: update_cart_event, operation: update_cartEvent}
+- {name: complete_transaction, schema: complete_transaction_event, operation: complete_transactionEvent}
+- {name: custom, schema: custom_event, operation: customEvent}
+relationships:
+- {from: identify_event, to: core_event, kind: composed_of, via: allOf}
+- {from: identify_event, to: traits, kind: has_one, via: traits}
+- {from: track_event, to: core_event, kind: composed_of, via: allOf}
+- {from: core_event, to: context, kind: has_one, via: context}
+- {from: add_to_cart_event, to: cartitem_with_quantity, kind: has_many, via: cart}
+- {from: cart_event, to: cartitem_with_quantity, kind: has_many, via: cart}
+- {from: complete_transaction_event, to: cartitem_with_quantity, kind: has_many, via: cart}
+- {from: product_view_event, to: cartitem, kind: has_one, via: product}
+- {from: favorite_event, to: cartitem, kind: has_one, via: product}
+- {from: contact, to: identify_event, kind: derived_from, via: 'identity resolution on traits.email / userId'}
+identity_resolution:
+  lookup_identifiers: [simonid, email, email-hash, primary-subscriber-key, riid, zendeskid]
+  note: >-
+    The Audience API's identity parameter doubles as a cross-platform bridge: primary-subscriber-key resolves a
+    Salesforce Marketing Cloud subscriber, riid an Oracle Responsys recipient, zendeskid a Zendesk user.
+id_prefixes: []

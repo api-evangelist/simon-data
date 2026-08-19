@@ -1,0 +1,64 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/, well-known/, https://www.simon.ai/terms/security
+standards:
+- id: openapi-3
+  conforms: true
+  evidence: >-
+    Simon Data publishes OpenAPI per operation on its ReadMe developer hub — OpenAPI 3.1.0 for the Audience API and
+    OpenAPI 3.0.0 for each of the fourteen Simon Signal event definitions. Captured verbatim in openapi/_original/.
+- id: oauth2
+  conforms: true
+  evidence: >-
+    RFC 6749 authorization-code flow published for the MCP surface at
+    https://app.simondata.com/.well-known/oauth-authorization-server. Also supported as an outbound webhook
+    authentication type.
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: https://app.simondata.com/.well-known/oauth-authorization-server returns a valid RFC 8414 document.
+- id: rfc7636-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported is ["S256"] in the published authorization server metadata.
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint is advertised at https://app.simondata.com/mcp/oauth/register.
+- id: rfc6750-bearer-token
+  conforms: true
+  evidence: 'Audience API sends the credential as Authorization: Bearer <token> per the Getting Started page.'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors are returned as a bare {"error": "<message>"} JSON object with no type/title/detail members and no
+    application/problem+json media type.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt on any Simon Data host (all 404).
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support documented.
+- id: asyncapi
+  conforms: false
+  evidence: Outbound webhooks are documented in prose; no AsyncAPI document is published.
+- id: soc2-type-2
+  conforms: true
+  evidence: >-
+    "Simon Data is SOC 2 certified"; the SOC 2 Type 2 report and bridge letter are available under NDA via the trust
+    center. https://www.simon.ai/terms/security
+- id: gdpr
+  conforms: true
+  evidence: 'Stated on https://www.simon.ai/terms/security: "We are also GDPR and CCPA compliant." Simon acts as data processor.'
+- id: ccpa
+  conforms: true
+  evidence: https://www.simon.ai/terms/security
+- id: fhir-r4
+  conforms: false
+- id: scim2
+  conforms: false
+- id: json-api
+  conforms: false
+compliance_program:
+  url: https://www.simon.ai/terms/security
+  trust_center: https://trust.simon.ai/
+  certifications: [SOC 2 Type 2, GDPR, CCPA]
+  encryption_at_rest: AES-256, per-customer keys
+  encryption_in_transit: TLS 1.2, SSHv2

@@ -1,6 +1,6 @@
-generated: '2026-07-15'
+generated: '2026-08-13'
 method: generated
-source: openapi/simon-data-contact-openapi.yml, openapi/simon-data-event-ingestion-openapi.yml
+source: openapi/simon-data-audience-api-openapi.yml, openapi/simon-data-event-ingestion-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
@@ -16,7 +16,7 @@ summary:
 operations:
 - path: /contacts
   method: get
-  operationId: getContact
+  operationId: get-a-contact
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -24,7 +24,7 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /collect
+- path: /events/v1/collect
   method: post
   operationId: collectEvent
   x-agentic-access:

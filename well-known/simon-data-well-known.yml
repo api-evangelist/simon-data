@@ -1,0 +1,69 @@
+generated: '2026-08-13'
+method: probed
+source: live GET of /.well-known/* on every Simon Data host in apis.yml and openapi servers[]
+note: >-
+  One real hit. app.simondata.com serves an RFC 8414 OAuth 2.0 Authorization Server Metadata document whose
+  authorization, token and dynamic-client-registration endpoints all sit under /mcp/oauth/ — the discovery surface an
+  MCP client uses to authenticate against a hosted MCP server. Every other well-known path on every other host returned
+  404, except simonsignal.com, which is fronted by AWS API Gateway and answers 403 "Missing Authentication Token" to any
+  unrouted path (an API-Gateway catch-all, not a served document). No security.txt, no api-catalog, no ai-plugin, no
+  agent card anywhere.
+hosts:
+- host: https://app.simondata.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    file: simon-data-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://api.simondata.com
+  note: API host root; returns a JSON resource_not_found envelope for every unknown path.
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://www.simon.ai
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://docs.simondata.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://simonsignal.com
+  note: >-
+    AWS API Gateway edge. Every /.well-known/* path returns HTTP 403 with body {"message":"Missing Authentication
+    Token"} — the gateway's unrouted-path response, recorded as a miss, not a document.
+  documents:
+  - {path: /.well-known/security.txt, status: 403}
+  - {path: /.well-known/oauth-authorization-server, status: 403}
+  - {path: /.well-known/agent-card.json, status: 403}
+  - {path: /.well-known/agent.json, status: 403}
+security_txt: false
+agent_card: false

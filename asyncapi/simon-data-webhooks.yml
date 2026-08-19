@@ -1,0 +1,62 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.simondata.com/reference/outbound-webhooks
+spec_type: none
+note: >-
+  Simon Data publishes no AsyncAPI document. It does ship a real outbound event surface: the Webhook Channel Action,
+  which pushes segment and event data from a Simon flow or journey to any HTTPS destination the customer configures.
+  The payload is customer-defined — Simon does not publish a fixed event catalogue or a set of named event types, so
+  there is nothing to model as channels and no message schemas to capture. What IS published, and captured here, is the
+  delivery contract: batching, retry semantics, authentication handling and payload limits. Direction matters: Simon is
+  the HTTP client here, the customer's endpoint is the server. Nothing about this surface is fabricated into an
+  AsyncAPI document.
+surface:
+  kind: outbound-webhook
+  direction: simon-to-customer
+  configuration: Simon app — flow or journey Channel Action of type Webhook
+  docs:
+  - https://docs.simondata.com/reference/outbound-webhooks
+  - https://docs.simondata.com/reference/webhook-best-practices-1
+  - https://docs.simondata.com/reference/webhook-payload-examples
+  - https://docs.simondata.com/reference/test-webhook-payloads-1
+  event_catalog_published: false
+  signing: none documented
+  replay: none documented
+delivery:
+  methods: [POST, GET]
+  encodings: [json, form-encoded]
+  request_types: [single, batch]
+  batch:
+    shape: [object, array]
+    example_batch_size: 500
+    note: >-
+      In batch mode the payload is a group of contacts, each a JSON object of the configured key/value pairs. With
+      payload type Object the array is nested under a customer-chosen payload key; with payload type Array the batch is
+      the top-level document.
+  nested_objects:
+    notation: dot
+    applies_to: json-encoded parameters only
+    example: 'outer_object.inner_object.value -> {"outer_object": {"inner_object": {"value": true}}}'
+  limits:
+  - {surface: POST body, limit: 2 MB (2,097,152 bytes)}
+  - {surface: GET URL, limit: 2,048 characters}
+retry:
+  retried_status_codes: [429, '5xx']
+  ignored_status_codes: ['30x', '4xx except 429']
+  attempts: 3
+  backoff: exponential
+  oauth2_reauth_status_codes: [401, 403, 419]
+  oauth2_behaviour: automatically re-authenticate then retry, three attempts with exponential backoff
+  failure_logging: recorded as sync failures, visible in the Simon app
+  ordering:
+    guarantee: none
+    note: Event processing happens as-is; ordering is a function of the segment and flow configuration.
+authentication:
+  note: >-
+    Simon recommends HTTPS destinations and supports adding authorization to outbound requests, including OAuth2, where
+    the destination endpoint supports it.
+  docs: https://docs.simondata.com/reference/outbound-integration-authentication
+inbound_alternative:
+  note: >-
+    For inbound real-time events the surface is the Event Ingestion API, not a webhook — see
+    openapi/simon-data-event-ingestion-openapi.yml.

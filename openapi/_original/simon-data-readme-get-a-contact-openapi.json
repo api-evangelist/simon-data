@@ -1,0 +1,170 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "audience-api",
+    "version": "2.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.simondata.com/audience/v2"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "sec0": {
+        "type": "oauth2",
+        "flows": {}
+      }
+    }
+  },
+  "security": [
+    {
+      "sec0": []
+    }
+  ],
+  "paths": {
+    "/contacts": {
+      "get": {
+        "summary": "Get a contact",
+        "description": "",
+        "operationId": "get-a-contact",
+        "parameters": [
+          {
+            "name": "identity",
+            "in": "path",
+            "description": "Identifier and ID for the contact requested, in the format identifier:id",
+            "schema": {
+              "type": "string",
+              "default": "email:tom@hello.com"
+            },
+            "required": true
+          },
+          {
+            "name": "fields",
+            "in": "path",
+            "description": "List of Contact fields that should be returned in the response. For example: fields=first_name,flow_variant_membersip",
+            "schema": {
+              "type": "string",
+              "default": "fields=first_name,flow_variant_membership"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{\n  \"status\": \"success\",\n  \"contact\": {\n    \"email_address\": \"tom@hello.com\",\n    \"first_name\": \"Tom\",\n    \"address_city\": \"New York\",\n    \"address_state\": \"NY\",\n    \"flow_variant_membership\": [\n      \"142309\",\n      \"203850-Variant A\"\n    ],\n    \"total_lifetime_value_jde\": \"$241.56\"\n  }\n}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "contact": {
+                      "type": "object",
+                      "properties": {
+                        "email_address": {
+                          "type": "string",
+                          "example": "tom@hello.com"
+                        },
+                        "first_name": {
+                          "type": "string",
+                          "example": "Tom"
+                        },
+                        "address_city": {
+                          "type": "string",
+                          "example": "New York"
+                        },
+                        "address_state": {
+                          "type": "string",
+                          "example": "NY"
+                        },
+                        "flow_variant_membership": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "example": "142309"
+                          }
+                        },
+                        "total_lifetime_value_jde": {
+                          "type": "string",
+                          "example": "$241.56"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": "{}"
+                  }
+                },
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "403",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": ""
+                  }
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "429",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": ""
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "500",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Result": {
+                    "value": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "x-readme": {
+    "headers": [],
+    "explorer-enabled": false,
+    "proxy-enabled": true
+  },
+  "x-readme-fauxas": true
+}

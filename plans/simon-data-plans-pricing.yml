@@ -1,9 +1,19 @@
 name: Simon Data Plans and Pricing
 description: Simon Data offers enterprise custom pricing for their AI-first customer data platform. Pricing is based on total contact volumes processed by the Simon AI platform. No publicly listed fixed tiers or free plans are available; all deployments are tailored to specific business needs, data volume, and use case.
-version: '0.1'
+version: '0.2'
 url: https://www.simon.ai/pricing
+generated: '2026-08-13'
+method: searched
+source: https://www.simon.ai/pricing
+plan_count: 0
+public_pricing: false
+note: >-
+  Simon Data publishes no priced tiers. The pricing page is a contact-sales page — there is no free plan, no trial and
+  no published rate card; pricing is quoted against total contact volume read by the platform. plan_count is 0 because
+  zero priced plans are published, and the single entry below records the enterprise custom engagement rather than a
+  purchasable tier. Verified 2026-08-13 (HTTP 200).
 created: '2026-06-13'
-modified: '2026-06-13'
+modified: '2026-08-13'
 plans:
   - name: Enterprise Custom
     description: Fully customized deployment of the Simon Data CDP tailored to enterprise marketing teams. Pricing is determined by total contact volumes and specific platform feature requirements. Includes access to segmentation, journey orchestration, AI agents, event tracking, and multi-channel activation.

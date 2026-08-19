@@ -1,0 +1,47 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.simondata.com/reference/install-simonjs-using-native-javascript
+note: >-
+  Simon Data ships one client-side component: Simon.JS, the browser event-collection library behind Simon Signal. It is
+  not distributed through any public package registry. The install is an inline bootstrap snippet whose script src is a
+  per-customer value ("LOCATION_OF_SIMON_JS") shown in the Simon app under Admin Center > Signal Installation, so there
+  is no public URL and no publicly readable version — a consumer cannot tell which build they are loading. The npm
+  package named `simon.js` is an unrelated Node framework by a third party and is NOT Simon Data's library.
+components:
+- name: Simon.JS
+  family: event collection
+  kind: javascript-tag
+  registry: none
+  version: null
+  published: null
+  url: https://docs.simondata.com/reference/install-simonjs-using-native-javascript
+  install: >-
+    Inline bootstrap snippet placed before </head>, configured with _sd.partnerId, _sd.domain, _sd.environment,
+    _sd.debug and _sd.behaviors; the script src is a per-tenant URL supplied by Simon.
+  api_surface:
+  - 'sd.identify(userId, [traitsObject])'
+  - 'sd.track(...)'
+  config:
+  - {name: partnerId, description: Internal partnerId Simon uses to identify the customer's site.}
+  - {name: domain, description: Cookie domain for Simon.JS; defaults to the current page domain.}
+  - {name: environment, description: Simon environment to send data to; defaults to prod and must be prod to function.}
+  - {name: behaviors.trackPageViewOnLoad, description: Capture page_view automatically on load. Simon.JS 2.0+. Default false.}
+  - {name: debug, description: Log errors and status to the console. Default false.}
+  note: >-
+    Version is null because the distribution is unpinned and tenant-hosted — there is no registry endpoint and no
+    public URL to read a version from. Documented behaviours are gated on "Supported: v2.0+", which is the only version
+    signal published.
+- name: Simon.JS via Google Tag Manager
+  family: event collection
+  kind: tag-manager-template
+  registry: none
+  version: null
+  published: null
+  url: https://docs.simondata.com/reference/install-simonjs-using-google-tag-manager
+- name: Simon.JS via Tealium
+  family: event collection
+  kind: tag-manager-template
+  registry: none
+  version: null
+  published: null
+  url: https://docs.simondata.com/reference/install-simonjs-using-tealium

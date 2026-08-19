@@ -1,0 +1,341 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Event Ingestion API_Custom_Event",
+    "description": "This API enables you to send event data to Simon Data from your event stream using HTTP.",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "https://dev.simonsignal.com/",
+      "description": "Development Server"
+    },
+    {
+      "url": "https://staging.simonsignal.com/http/v1/collect",
+      "description": "Staging Server"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "core_event": {
+        "type": "object",
+        "required": [
+          "partnerId",
+          "context",
+          "clientId",
+          "partnerSecret",
+          "sentAt",
+          "type"
+        ],
+        "properties": {
+          "partnerId": {
+            "description": "The internal partnerId Simon uses to identify the customer's site.",
+            "type": "string"
+          },
+          "context": {
+            "$ref": "#/components/schemas/context"
+          },
+          "clientId": {
+            "description": "A unique identifier for the device. If no unique identifier for the device can be maintained this may be a unique identifier for the current session (max length: 45 characters).",
+            "type": "string"
+          },
+          "partnerSecret": {
+            "description": "The shared secret used for authentication.",
+            "type": "string"
+          },
+          "ipAddress": {
+            "description": "The public IP address of the users device if available.",
+            "type": "string"
+          },
+          "sentAt": {
+            "description": "Epoch time in milliseconds of when the request was sent. Epoch time is the number of milliseconds that have elapsed since January 1, 1970 (midnight UTC/GMT).",
+            "type": "integer"
+          },
+          "timezone": {
+            "description": "The time difference between UTC time and local time, in minutes. See https://www.w3schools.com/jsref/jsref_gettimezoneoffset.asp for an example.",
+            "type": "integer"
+          },
+          "type": {
+            "description": "The high level type of request being sent in can be either track or identify.",
+            "type": "string",
+            "enum": [
+              "track",
+              "identify"
+            ]
+          }
+        }
+      },
+      "context": {
+        "description": "A dictionary containing optional fields about the context of the event.",
+        "type": "object",
+        "properties": {
+          "debug": {
+            "description": "A setting for development, when if True, will tell the HTTP API to send validation errors as HTTP 412 errors. Boolean field, defaults to False.",
+            "type": "boolean"
+          },
+          "name": {
+            "description": "Unique name for your client library. For example, our Simon JavaScript SDK sets this to simon.js.",
+            "type": "string"
+          },
+          "version": {
+            "description": "Version identifier for your client library.",
+            "type": "string"
+          },
+          "userAgent": {
+            "description": "The user agent of the device sending the event, if available.",
+            "type": "string"
+          },
+          "page": {
+            "description": "A dictionary representing parameters relevant to the page's context.",
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "url": {
+            "description": "The page url of the event which the event was triggered from, if available.",
+            "type": "string"
+          },
+          "device": {
+            "description": "A dictionary representing parameters relevant to the device's context.",
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "type": {
+            "description": "String identifying the type of client device (e.g. android).",
+            "type": "string"
+          }
+        }
+      },
+      "traits": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "description": "The email address of the user (e.g. joe@smith.com).",
+            "type": "string"
+          },
+          "firstName": {
+            "description": "The first name of the user (e.g. Joe).",
+            "type": "string"
+          },
+          "lastName": {
+            "description": "The last name of the user (e.g. Smith).",
+            "type": "string"
+          },
+          "name": {
+            "description": "The full name of the user. (e.g. Joe Smith).",
+            "type": "string"
+          },
+          "userId": {
+            "description": "The user id. (e.g. 97980cfea0067).",
+            "type": "string"
+          },
+          "username": {
+            "description": "The username (e.g. joesmith).",
+            "type": "string"
+          },
+          "ARN": {
+            "description": "The ARN of the user. Used to sync Simon with Amazon SNS.",
+            "type": "string"
+          },
+          "properties": {
+            "description": "An object of extra arguments (e.g. { campaignId: '12345' }).",
+            "type": "object",
+            "additionalProperties": {}
+          }
+        }
+      },
+      "track_event": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/core_event"
+          }
+        ],
+        "required": [
+          "type",
+          "properties",
+          "event"
+        ],
+        "properties": {
+          "type": {
+            "description": "The high level type of request being sent and must be track.",
+            "type": "string",
+            "enum": [
+              "track"
+            ]
+          },
+          "event": {
+            "description": "Event type: page_view, etc",
+            "type": "string",
+            "enum": [
+              "page_view",
+              "product_view",
+              "add_to_cart",
+              "cart",
+              "update_cart",
+              "remove_from_cart",
+              "complete_transaction",
+              "registration",
+              "favorite",
+              "waitlist",
+              "authentication",
+              "custom"
+            ]
+          },
+          "userId": {
+            "description": "Custom user identifier",
+            "type": "string"
+          },
+          "traits": {
+            "$ref": "#/components/schemas/traits"
+          }
+        }
+      },
+      "custom_event": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/track_event"
+          }
+        ],
+        "required": [
+          "properties",
+          "event"
+        ],
+        "properties": {
+          "event": {
+            "description": "Event type: Must be custom",
+            "type": "string",
+            "enum": [
+              "custom"
+            ]
+          },
+          "properties": {
+            "required": [
+              "eventName"
+            ],
+            "properties": {
+              "eventName": {
+                "description": "The custom event type name (max length: 38 characters).",
+                "type": "string"
+              },
+              "properties": {
+                "description": "An object of extra arguments.",
+                "type": "object",
+                "additionalProperties": {}
+              },
+              "requiresIdentity": {
+                "description": "If False, the event will not require an email or match an identify event to be used. Defaults to True.",
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/events/v1/collect": {
+      "post": {
+        "operationId": "customEvent",
+        "summary": "Custom event",
+        "description": "Post custom event to Simon Data. See Event Details and Descriptions for more detail.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/custom_event"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success (Returns no JSON)"
+          },
+          "400": {
+            "description": "Invalid JSON body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Invalid JSON body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Forbidden"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "Invalid request data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Unknown event type: collect.track"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}

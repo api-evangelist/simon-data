@@ -1,4 +1,4 @@
-generated: '2026-07-11'
+generated: '2026-08-13'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
@@ -11,13 +11,13 @@ hosts:
 - host: docs.simondata.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Sep 12 18:24:59 2026 GMT
+  cert_expires: Nov 10 22:57:11 2026 GMT
   hsts: true
   hsts_max_age: 31536000
-- host: dev.simonsignal.com
+- host: api.simondata.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Oct 14 23:59:59 2026 GMT
+  cert_expires: Feb 15 23:59:59 2027 GMT
   hsts: null
 domains:
 - domain: simon.ai

@@ -1,0 +1,59 @@
+generated: '2026-08-13'
+method: searched
+source: https://docs.simondata.com/docs/operational-status, https://docs.simondata.com/changelog, https://status.simondata.com/
+versioning:
+  scheme: uri-path
+  current:
+  - api: Simon Data Audience API
+    version: v2
+    base: https://api.simondata.com/audience/v2
+  - api: Simon Data Event Ingestion API
+    version: v1
+    base: https://simonsignal.com/http/v1
+  docs: https://docs.simondata.com/reference/getting-started
+  note: >-
+    Both APIs carry the major version in the path. Simon Data publishes no written versioning policy, no deprecation
+    policy and no Sunset/Deprecation header support; nothing in the docs states how long a prior version is supported.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No deprecation or sunset policy is published.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA. Enterprise contracts are the stated route for throughput and availability commitments; the docs
+    direct customers to their account team.
+status_page:
+  url: https://status.simondata.com/
+  provider: Atlassian Statuspage
+  api: https://status.simondata.com/api/v2/summary.json
+  docs: https://docs.simondata.com/docs/operational-status
+  subscribe: [email, sms, webhook, slack, atom, rss]
+  history_window_days: 60
+  components_observed:
+  - Simon Audience API
+  - Simon Data Pipes
+  - Simon Data Syncs
+  - Simon Event Trigger Flows
+  - Simon Web App
+  - Simon Mail (message sending)
+  - Simon Mail (subscription management)
+  - Journeys
+  - 3rd Party Email
+  - 3rd Party SMS
+  - 3rd Party Push
+  note: >-
+    The status page also reports third-party dependency status (SendGrid, Twilio, Iterable, Airship, AWS SNS) as a
+    convenience; those components are maintained by the vendors, not Simon.
+changelog: https://docs.simondata.com/changelog
+deprecated_operations: []
+corporate:
+  event: acquisition
+  date: '2026-07-30'
+  acquirer: Monetate
+  source: https://www.simon.ai/blog-posts/simon-ai-acquired-by-monetate
+  note: >-
+    Simon AI (Simon Data) announced on 2026-07-30 that it has been acquired by Monetate. The announcement states both
+    products continue as individual products with dedicated teams and roadmaps. Recorded because it is the strongest
+    forward-looking signal on this API's lifecycle; no API deprecation has been announced.

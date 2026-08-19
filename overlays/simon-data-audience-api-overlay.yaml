@@ -1,0 +1,41 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Simon Data Audience API
+  version: 1.0.0
+extends: openapi/simon-data-audience-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: >-
+  Records what API Evangelist changed relative to Simon Data's own published definition, preserved verbatim at
+  openapi/_original/simon-data-readme-get-a-contact-openapi.json. Two corrections, both grounded in Simon Data's own
+  documentation: the provider's definition declares identity and fields as path parameters, but the Getting Started
+  page's curl example passes them as query parameters
+  (GET /audience/v2/contacts?identity=email:<address>); and the provider's definition carries a placeholder oauth2
+  scheme with an empty flows object, while the same page documents bearer-token authentication.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-08-13'
+    x-apievangelist-source: https://docs.simondata.com/reference/get-a-contact.md
+- target: "$.paths['/contacts'].get.parameters[?(@.name=='identity')]"
+  update:
+    in: query
+    x-apievangelist-note: >-
+      Corrected from `in: path` to `in: query`; the provider's own curl example passes it as a query string parameter.
+- target: "$.paths['/contacts'].get.parameters[?(@.name=='fields')]"
+  update:
+    in: query
+    x-apievangelist-note: >-
+      Corrected from `in: path` to `in: query`, per the provider's Getting Started example.
+- target: $.components.securitySchemes
+  update:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Bearer token issued by a Simon Data Client Solutions Manager. Replaces the provider definition's placeholder
+        `sec0` oauth2 scheme, which declares an empty flows object.
+- target: "$.paths['/contacts'].get"
+  update:
+    tags: [Contacts]
+    x-apievangelist-rate-limit: 50 requests/second per organisation, aggregated across all bearer tokens

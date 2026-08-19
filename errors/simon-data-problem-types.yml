@@ -1,0 +1,73 @@
+generated: '2026-08-13'
+method: derived
+source: openapi/simon-data-audience-api-openapi.yml, openapi/simon-data-event-ingestion-openapi.yml, https://docs.simondata.com/reference/getting-started
+docs: https://docs.simondata.com/reference/getting-started
+format: vendor-json
+envelope:
+  shape: '{"error": "<message>"}'
+  media_type: application/json
+  note: >-
+    Simon Data does not implement RFC 9457 problem details. Event Ingestion returns a flat JSON object with a single
+    `error` string; the Audience API documents conventional HTTP status codes and returns an empty body on 403, 429 and
+    500. There is no machine-readable error code vocabulary, no type URI and no request identifier in the envelope.
+problems:
+- status: 400
+  title: Invalid JSON body
+  api: Event Ingestion
+  detail: The request body could not be parsed as JSON.
+  example_error: Invalid JSON body
+  source_operation: openapi/simon-data-event-ingestion-openapi.yml#collectEvent
+- status: 401
+  title: Unauthorized
+  api: Event Ingestion
+  detail: Missing or invalid partnerSecret.
+  example_error: Unauthorized
+  source_operation: openapi/simon-data-event-ingestion-openapi.yml#collectEvent
+- status: 403
+  title: Forbidden
+  api: Event Ingestion
+  detail: The partner credentials are valid but not permitted for this call.
+  example_error: Forbidden
+  source_operation: openapi/simon-data-event-ingestion-openapi.yml#collectEvent
+- status: 412
+  title: Invalid request data
+  api: Event Ingestion
+  detail: >-
+    Payload failed validation. Only returned when context.debug is true — otherwise validation exceptions are silent
+    and the event is dropped. This is the single most important error semantic in the Simon Signal API: without debug
+    mode a malformed event is accepted at the wire level and lost downstream.
+  example_error: 'Unknown event type: collect.track'
+  remediation: Set context.debug to true in a non-production environment to surface the validation error.
+  source_operation: openapi/simon-data-event-ingestion-openapi.yml#collectEvent
+- status: 500
+  title: Internal Server Error
+  api: Event Ingestion
+  example_error: Internal Server Error
+  source_operation: openapi/simon-data-event-ingestion-openapi.yml#collectEvent
+- status: 400
+  title: Bad Request
+  api: Audience
+  detail: May occur because the requested contact does not exist.
+  source_operation: openapi/simon-data-audience-api-openapi.yml#get-a-contact
+- status: 403
+  title: Forbidden
+  api: Audience
+  detail: Empty body.
+  source_operation: openapi/simon-data-audience-api-openapi.yml#get-a-contact
+- status: 429
+  title: Rate Limited
+  api: Audience
+  detail: >-
+    Request frequency too high. The Audience API limit is 50 requests per second across the whole organisation,
+    aggregated over every bearer token the organisation holds.
+  remediation: Back off and retry; contact the Simon account manager with a use case to request a limit increase.
+  source_operation: openapi/simon-data-audience-api-openapi.yml#get-a-contact
+- status: 500
+  title: Server Error
+  api: Audience
+  detail: The request was not completed due to an internal server error.
+  source_operation: openapi/simon-data-audience-api-openapi.yml#get-a-contact
+size_limits:
+- api: Event Ingestion
+  limit: 100 KB per event
+  behaviour: Events larger than 100 KB are rejected.

@@ -81,6 +81,11 @@ apis:
   humanURL: https://docs.simondata.com/reference/event-ingestion-api
   baseURL: https://simonsignal.com/http/v1
   tags:
+  - Event
+  - Event Ingestion
+  - Clickstream
+  - Simon Signal
+  tags_raw:
   - Events
   - Event Ingestion
   - Clickstream

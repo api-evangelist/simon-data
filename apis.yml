@@ -43,58 +43,43 @@ tags:
   - Snowflake
 apis:
 - aid: simon-data:simon-data-contacts-api
-  name: Simon Data Audience API
-  description: >-
-    The Simon Audience API returns a single Simon Data contact profile at request time so marketers can personalise
-    content across email, SMS, push and front-of-house tools. Contacts are looked up with an identity string in the
-    form identifier:id (simonid, email, email-hash, primary-subscriber-key, riid, zendeskid) plus a comma-separated
-    list of contact fields. An optional premium feature, authenticated with a bearer token issued by a Simon Client
-    Solutions Manager, and intended for server-side use only.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  name: Simon Data Contacts API
+  description: Contact profile lookup.
   humanURL: https://docs.simondata.com/reference/getting-started
   baseURL: https://api.simondata.com/audience/v2
   tags:
   - Contacts
-  - Audience
-  - Personalization
-  - Customer Profiles
   properties:
   - type: OpenAPI
-    url: openapi/simon-data-audience-api-openapi.yml
-  - type: Overlay
-    url: overlays/simon-data-audience-api-overlay.yaml
+    url: openapi/simon-data-contacts-api-openapi.yml
   - type: Documentation
     url: https://docs.simondata.com/reference/getting-started
   - type: APIReference
     url: https://docs.simondata.com/reference/get-a-contact
   - type: GettingStarted
     url: https://docs.simondata.com/reference/getting-started
+  - type: Documentation
+    url: https://docs.simondata.com/reference/event-ingestion-api
+  - type: APIReference
+    url: https://docs.simondata.com/reference/simon-signal-overview
+  - type: Sandbox
+    url: sandbox/simon-data-sandbox.yml
 - aid: simon-data:simon-data-events-api
-  name: Simon Data Event Ingestion API
-  description: >-
-    Simon Signal is Simon Data's event protocol and event-processing pipeline. The Event Ingestion API accepts a
-    single behavioural or transactional event per request at POST /events/v1/collect across production, staging and
-    development endpoints. Fourteen published event payload types are supported — identify, authentication, cart,
-    add_to_cart, remove_from_cart, update_cart, complete_transaction, page_view, product_view, favorite, search,
-    registration, waitlist and custom. Authentication is a shared partnerSecret carried in the payload.
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.simondata.com/reference/event-ingestion-api
-  baseURL: https://simonsignal.com/http/v1
+  name: Simon Data Events API
+  description: Event collection into the Simon Signal pipeline.
+  humanURL: https://docs.simondata.com/reference/getting-started
+  baseURL: https://api.simondata.com/audience/v2
   tags:
-  - Event
-  - Event Ingestion
-  - Clickstream
-  - Simon Signal
-  tags_raw:
   - Events
-  - Event Ingestion
-  - Clickstream
-  - Simon Signal
   properties:
   - type: OpenAPI
-    url: openapi/simon-data-event-ingestion-openapi.yml
-  - type: Overlay
-    url: overlays/simon-data-event-ingestion-overlay.yaml
+    url: openapi/simon-data-events-api-openapi.yml
+  - type: Documentation
+    url: https://docs.simondata.com/reference/getting-started
+  - type: APIReference
+    url: https://docs.simondata.com/reference/get-a-contact
+  - type: GettingStarted
+    url: https://docs.simondata.com/reference/getting-started
   - type: Documentation
     url: https://docs.simondata.com/reference/event-ingestion-api
   - type: APIReference
@@ -102,6 +87,10 @@ apis:
   - type: Sandbox
     url: sandbox/simon-data-sandbox.yml
 common:
+  - type: Overlay
+    url: overlays/simon-data-audience-api-overlay.yaml
+  - type: Overlay
+    url: overlays/simon-data-event-ingestion-overlay.yaml
   - type: OpenAPI
     url: openapi/simon-data-audience-api-openapi.yml
   - type: OpenAPI

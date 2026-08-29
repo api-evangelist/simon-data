@@ -8,6 +8,18 @@ description: >-
   accepts fourteen documented behavioural and transactional event types at a single collect endpoint, and the premium
   Audience API, which returns one contact profile at a time for send-time personalisation. Outbound webhooks and a
   Real-Time Content client cover the reverse direction, calling customer endpoints at send time.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: self-serve

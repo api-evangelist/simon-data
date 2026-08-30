@@ -1,0 +1,771 @@
+openapi: 3.2.0
+info:
+  title: Simon Data Event Ingestion API (Simon Signal) Events API
+  description: 'Simon Signal is Simon Data''s event protocol and event-processing pipeline. The Event Ingestion API accepts a single behavioural or transactional event per request at POST /events/v1/collect. Every payload carries partnerId, partnerSecret, clientId, sentAt, type (track or identify) and a context object; the event-specific body varies by event type. Events larger than 100 KB are rejected. Set context.debug to true to receive detailed HTTP 412 validation errors.
+
+
+    This document is a faithful merge of the fourteen per-event OpenAPI definitions Simon Data publishes on its ReadMe developer hub (one definition per event type, all bound to the same POST /events/v1/collect operation). The per-event definitions are preserved verbatim in openapi/_original/simon-data-readme-*-openapi.json; the merge expresses them as a single operation whose request body is a oneOf across the fourteen published event schemas, because the provider ships one endpoint, not fourteen.'
+  version: '1'
+  contact:
+    name: Simon Data Support
+    url: https://docs.simondata.com/reference/event-ingestion-api
+  x-api-id: simon-data-event-ingestion
+servers:
+- url: https://simonsignal.com/http/v1
+  description: Production
+- url: https://staging.simonsignal.com/http/v1
+  description: Staging
+- url: https://dev.simonsignal.com/http/v1
+  description: Development
+tags:
+- name: Events
+  description: Event collection into the Simon Signal pipeline.
+paths:
+  /events/v1/collect:
+    post:
+      operationId: collectEvent
+      summary: Collect an event
+      description: Accepts a single Simon Signal event. The request body must match one of the fourteen published event payload schemas. Authentication is the shared partnerSecret carried in the payload.
+      tags:
+      - Events
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/add_to_cart_event'
+              - $ref: '#/components/schemas/authentication_event'
+              - $ref: '#/components/schemas/cart_event'
+              - $ref: '#/components/schemas/complete_transaction_event'
+              - $ref: '#/components/schemas/custom_event'
+              - $ref: '#/components/schemas/favorite_event'
+              - $ref: '#/components/schemas/identify_event'
+              - $ref: '#/components/schemas/page_view_event'
+              - $ref: '#/components/schemas/product_view_event'
+              - $ref: '#/components/schemas/registration_event'
+              - $ref: '#/components/schemas/remove_from_cart_event'
+              - $ref: '#/components/schemas/search_event'
+              - $ref: '#/components/schemas/update_cart_event'
+              - $ref: '#/components/schemas/waitlist_event'
+      responses:
+        '200':
+          description: Success (Returns no JSON)
+        '400':
+          description: Invalid JSON body
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: Invalid JSON body
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: Forbidden
+        '412':
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: 'Unknown event type: collect.track'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    type: string
+                    example: Internal Server Error
+      x-published-event-operations:
+        add_to_cartEvent:
+          schema: add_to_cart_event
+          source: simon-data-readme-add-to-cartevent-openapi.json
+          summary: Add To Cart Event
+          description: Send data to Simon about what products customers have added to their carts. See Event Details and Descriptions for more detail.
+        authenticationEvent:
+          schema: authentication_event
+          source: simon-data-readme-authenticationevent-openapi.json
+          summary: Authentication event
+          description: Post authentication event to Simon Data to track customer logins and logouts. See Event Details and Descriptions for more detail.
+        cartEvent:
+          schema: cart_event
+          source: simon-data-readme-cartevent-openapi.json
+          summary: Cart Event
+          description: Post cart event to Simon Data. See Event Details and Descriptions for more detail.
+        complete_transactionEvent:
+          schema: complete_transaction_event
+          source: simon-data-readme-complete-transactionevent-openapi.json
+          summary: Complete Transaction Event
+          description: Post complete_transaction event to Simon Data. See Event Details and Descriptions for more detail.
+        customEvent:
+          schema: custom_event
+          source: simon-data-readme-customevent-openapi.json
+          summary: Custom event
+          description: Post custom event to Simon Data. See Event Details and Descriptions for more detail.
+        favoriteEvent:
+          schema: favorite_event
+          source: simon-data-readme-favoriteevent-openapi.json
+          summary: Favorite event
+          description: Post favorite event data to Simon Data. See Event Details and Descriptions for more detail.
+        identifyEvent:
+          schema: identify_event
+          source: simon-data-readme-identifyevent-openapi.json
+          summary: Identify Event
+          description: Post identify event to Simon Data. See Event Details and Descriptions for more detail.
+        page_viewEvent:
+          schema: page_view_event
+          source: simon-data-readme-page-viewevent-openapi.json
+          summary: Page View Event
+          description: Send data about your customers' page views to Simon Data. See Event Details and Descriptions for more detail.
+        product_viewEvent:
+          schema: product_view_event
+          source: simon-data-readme-product-viewevent-openapi.json
+          summary: Product View Event
+          description: Post product_view event to Simon Data. See Event Details and Descriptions for more detail.
+        registrationEvent:
+          schema: registration_event
+          source: simon-data-readme-registrationevent-openapi.json
+          summary: Registration Event
+          description: Post registration event to Simon Data. See Event Details and Descriptions for more detail.
+        remove_from_cartEvent:
+          schema: remove_from_cart_event
+          source: simon-data-readme-remove-from-cartevent-openapi.json
+          summary: Remove From Cart Event
+          description: Post remove_from_cart event to Simon Data. See Event Details and Descriptions for more detail.
+        search-event:
+          schema: search_event
+          source: simon-data-readme-search-event-openapi.json
+          summary: Search Event
+          description: null
+        update_cartEvent:
+          schema: update_cart_event
+          source: simon-data-readme-update-cartevent-openapi.json
+          summary: Update Cart Event
+          description: Post Update Cart event to Simon Data. See Event Details and Descriptions for more detail.
+        waitlistEvent:
+          schema: waitlist_event
+          source: simon-data-readme-waitlistevent-openapi.json
+          summary: Waitlist Event
+          description: Post waitlist event to Simon Data. See Event Details and Descriptions for more detail.
+components:
+  schemas:
+    core_event:
+      type: object
+      required:
+      - partnerId
+      - context
+      - clientId
+      - partnerSecret
+      - sentAt
+      - type
+      properties:
+        partnerId:
+          description: The internal partnerId Simon uses to identify the customer's site.
+          type: string
+        context:
+          $ref: '#/components/schemas/context'
+        clientId:
+          description: 'A unique identifier for the device. If no unique identifier for the device can be maintained this may be a unique identifier for the current session (max length: 45 characters).'
+          type: string
+        partnerSecret:
+          description: The shared secret used for authentication.
+          type: string
+        ipAddress:
+          description: The public IP address of the users device if available.
+          type: string
+        sentAt:
+          description: Epoch time in milliseconds of when the request was sent. Epoch time is the number of milliseconds that have elapsed since January 1, 1970 (midnight UTC/GMT).
+          type: integer
+        timezone:
+          description: The time difference between UTC time and local time, in minutes. See https://www.w3schools.com/jsref/jsref_gettimezoneoffset.asp for an example.
+          type: integer
+        type:
+          description: The high level type of request being sent in can be either track or identify.
+          type: string
+          enum:
+          - track
+          - identify
+    page_view_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/track_event'
+      required:
+      - properties
+      - event
+      properties:
+        event:
+          description: 'Event type: Must be page_view'
+          type: string
+          enum:
+          - page_view
+        properties:
+          properties:
+            title:
+              description: The title of the page.
+              type: string
+            language:
+              description: The user language preference. This can change on an event by event basis, hence why it is not in the context parameter.
+              type: string
+            referrer:
+              description: The URL of the referring page.
+              type: string
+    add_to_cart_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/track_event'
+      - type: object
+        required:
+        - properties
+        - event
+        properties:
+          event:
+            description: 'Event type: Must be add_to_cart'
+            type: string
+            enum:
+            - add_to_cart
+          properties:
+            required:
+            - productId
+            - variant
+            - quantity
+            allOf:
+            - $ref: '#/components/schemas/cartitem_with_quantity'
+            properties:
+              cartItems:
+                description: An array with the full contents of the cart (e.g. [{item 1 parameters},{item 2 parameters},...]).
+                type: array
+                items:
+                  $ref: '#/components/schemas/cartitem_with_quantity'
+    update_cart_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/track_event'
+      required:
+      - properties
+      - event
+      properties:
+        event:
+          description: 'Event type: Must be update_cart'
+          type: string
+          enum:
+          - update_cart
+        properties:
+          type: object
+          allOf:
+          - $ref: '#/components/schemas/cartitem'
+          properties:
+            quantity:
+              description: The new quantity of the product in the cart (e.g. 2).
+              type: number
+            previousQuantity:
+              description: The previous quantity of the product in the cart (e.g. 1).
+              type: number
+            cartItems:
+              required:
+              - productId
+              - variant
+              - quantity
+              description: An array with the full contents of the cart (e.g. [{item 1 parameters},{item 2 parameters},...]).
+              type: array
+              items:
+                $ref: '#/components/schemas/cartitem_with_quantity'
+    identify_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/core_event'
+      required:
+      - type
+      - userId
+      - traits
+      properties:
+        type:
+          description: The high level type of request being sent and must be identify.
+          type: string
+          enum:
+          - identify
+        userId:
+          description: Custom user identifier
+          type: string
+        traits:
+          $ref: '#/components/schemas/traits'
+    search_event:
+      type: object
+      properties:
+        term:
+          type: string
+        properties:
+          type: object
+          properties: {}
+        searchItems:
+          properties:
+            productId:
+              type: string
+            variant:
+              type: string
+            productImageUrl:
+              type: string
+            brand:
+              type: string
+            category:
+              type: string
+            color:
+              type: string
+            productName:
+              type: string
+            size:
+              type: string
+            style:
+              type: string
+            price:
+              type: string
+            properties:
+              type: string
+          required: []
+          type: object
+        event:
+          type: string
+          description: 'Event type: page_view, etc'
+        partnerId:
+          type: string
+          description: The internal partnerId Simon uses to identify the customer's site.
+        context:
+          type: object
+          description: A dictionary containing optional fields about the context of the event.
+          properties: {}
+        clientId:
+          type: string
+          description: 'A unique identifier for the device. If no unique identifier for the device can be maintained this may be a unique identifier for the current session (max length: 45 characters).'
+        partnerSecret:
+          type: string
+          description: The shared secret used for authentication.
+        ipAddress:
+          type: string
+          description: The public IP address of the user's device if available.
+        sentAt:
+          type: integer
+          description: Epoch time in milliseconds of when the request was sent. Epoch time is the number of milliseconds that have elapsed since January 1, 1970 (midnight UTC/GMT).
+          format: int32
+        timezone:
+          type: integer
+          description: The time difference between UTC time and local time, in minutes. See https://www.w3schools.com/jsref/jsref_gettimezoneoffset.asp for an example.
+          format: int32
+        traits:
+          type: object
+          properties: {}
+      description: 'Search event payload. Source: simon-data-readme-search-event-openapi.json'
+    favorite_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/track_event'
+      required:
+      - properties
+      - event
+      properties:
+        event:
+          description: 'Event type: Must be favorite'
+          type: string
+          enum:
+          - favorite
+        properties:
+          required:
+          - productId
+          allOf:
+          - $ref: '#/components/schemas/cartitem'
+    traits:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          description: The email address of the user (e.g. joe@smith.com).
+          type: string
+        firstName:
+          description: The first name of the user (e.g. Joe).
+          type: string
+        lastName:
+          description: The last name of the user (e.g. Smith).
+          type: string
+        name:
+          description: The full name of the user. (e.g. Joe Smith).
+          type: string
+        userId:
+          description: The user id. (e.g. 97980cfea0067).
+          type: string
+        username:
+          description: The username (e.g. joesmith).
+          type: string
+        ARN:
+          description: The ARN of the user. Used to sync Simon with Amazon SNS.
+          type: string
+        properties:
+          description: 'An object of extra arguments (e.g. { campaignId: ''12345'' }).'
+          type: object
+          additionalProperties: {}
+    complete_transaction_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/track_event'
+      required:
+      - properties
+      - event
+      properties:
+        event:
+          description: 'Event type: Must be complete_transaction'
+          type: string
+          enum:
+          - complete_transaction
+        properties:
+          required:
+          - transactionId
+          - revenue
+          - cartItems
+          properties:
+            transactionId:
+              description: The transaction ID (e.g. 122710332).
+              type: string
+            revenue:
+              description: Specifies the revenue associated with the transaction (e.g. 49.90). It does not include shipping or tax costs.
+              type: number
+            cartItems:
+              description: An array containing data about the products in the transaction (See table below).
+              type: array
+              items:
+                $ref: '#/components/schemas/cartitem_with_quantity'
+            shipping:
+              description: Specifies the total shipping cost of the transaction. (e.g. 5.00).
+              type: number
+            tax:
+              description: Specifies the total tax of the transaction. (e.g. 2.29).
+              type: number
+            promotion:
+              description: The promotion ID (e.g. PROMO_1234).
+              type: string
+            properties:
+              description: 'An object of extra arguments (e.g. { campaignId: ''12345'' }).'
+              type: object
+              additionalProperties: {}
+    cart_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/track_event'
+      required:
+      - properties
+      - event
+      properties:
+        properties:
+          required:
+          - cartItems
+          properties:
+            cartItems:
+              description: An array with the full contents of the cart (e.g. [{item 1 parameters},{item 2 parameters},...]).
+              type: array
+              items:
+                $ref: '#/components/schemas/cartitem_with_quantity'
+        event:
+          description: 'Event type: Must be cart'
+          type: string
+          enum:
+          - cart
+    track_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/core_event'
+      required:
+      - type
+      - properties
+      - event
+      properties:
+        type:
+          description: The high level type of request being sent and must be track.
+          type: string
+          enum:
+          - track
+        event:
+          description: 'Event type: page_view, etc'
+          type: string
+          enum:
+          - page_view
+          - product_view
+          - add_to_cart
+          - cart
+          - update_cart
+          - remove_from_cart
+          - complete_transaction
+          - registration
+          - favorite
+          - waitlist
+          - authentication
+          - custom
+        userId:
+          description: Custom user identifier
+          type: string
+        traits:
+          $ref: '#/components/schemas/traits'
+    remove_from_cart_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/track_event'
+      - type: object
+        required:
+        - properties
+        - event
+        properties:
+          event:
+            description: 'Event type: Must be remove_from_cart'
+            type: string
+            enum:
+            - remove_from_cart
+          properties:
+            required:
+            - productId
+            - variant
+            - quantity
+            allOf:
+            - $ref: '#/components/schemas/cartitem_with_quantity'
+    product_view_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/track_event'
+      required:
+      - properties
+      - event
+      properties:
+        properties:
+          required:
+          - productId
+          allOf:
+          - $ref: '#/components/schemas/cartitem'
+        event:
+          description: 'Event type: Must be product_view'
+          type: string
+          enum:
+          - product_view
+    custom_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/track_event'
+      required:
+      - properties
+      - event
+      properties:
+        event:
+          description: 'Event type: Must be custom'
+          type: string
+          enum:
+          - custom
+        properties:
+          required:
+          - eventName
+          properties:
+            eventName:
+              description: 'The custom event type name (max length: 38 characters).'
+              type: string
+            properties:
+              description: An object of extra arguments.
+              type: object
+              additionalProperties: {}
+            requiresIdentity:
+              description: If False, the event will not require an email or match an identify event to be used. Defaults to True.
+              type: boolean
+    cartitem_with_quantity:
+      allOf:
+      - $ref: '#/components/schemas/cartitem'
+      - type: object
+        required:
+        - productId
+        - variant
+        - quantity
+        properties:
+          quantity:
+            description: The quantity of the product added to the cart (e.g. 1).
+            type: number
+    context:
+      description: A dictionary containing optional fields about the context of the event.
+      type: object
+      properties:
+        debug:
+          description: A setting for development, when if True, will tell the HTTP API to send validation errors as HTTP 412 errors. Boolean field, defaults to False.
+          type: boolean
+        name:
+          description: Unique name for your client library. For example, our Simon JavaScript SDK sets this to simon.js.
+          type: string
+        version:
+          description: Version identifier for your client library.
+          type: string
+        userAgent:
+          description: The user agent of the device sending the event, if available.
+          type: string
+        page:
+          description: A dictionary representing parameters relevant to the page's context.
+          type: object
+          additionalProperties: {}
+        page.url:
+          description: The page url of the event which the event was triggered from, if available.
+          type: string
+        device:
+          description: A dictionary representing parameters relevant to the device's context.
+          type: object
+          additionalProperties: {}
+        device.type:
+          description: String identifying the type of client device (e.g. android).
+          type: string
+    authentication_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/track_event'
+      required:
+      - properties
+      - event
+      properties:
+        event:
+          description: 'Event type: Must be authentication'
+          type: string
+          enum:
+          - authentication
+        properties:
+          required:
+          - userId
+          - isLoggedIn
+          - ARN
+          properties:
+            userId:
+              description: The unique userId of the user authenticating.
+              type: string
+            isLoggedIn:
+              description: A flag indicating if the user is logging into the system. This should be false when the user is logging out.
+              type: boolean
+            ARN:
+              description: The Amazon AWS ARN the of the user.
+              type: string
+            email:
+              description: The email address of the user authenticating.
+              type: string
+            properties:
+              description: An object of extra arguments.
+              type: object
+              additionalProperties: {}
+    cartitem:
+      type: object
+      properties:
+        productId:
+          description: The product ID or SKU (e.g. 632910392).
+          type: string
+        variant:
+          description: The variant of the product (e.g. 808950810).
+          type: string
+        productImageUrl:
+          description: The encoded URL for an image of the product (starts with http or https).
+          type: string
+        productUrl:
+          description: The encoded URL for the product page (starts with http or https).
+          type: string
+        brand:
+          description: The brand to which the product belongs (e.g. Acme).
+          type: string
+        category:
+          description: The category to which the product belongs (e.g. Apparel). Use / as a delimiter to specify up to 5-levels of hierarchy (e.g. Apparel/Men/T-Shirts).
+          type: string
+        color:
+          description: The color of the product (e.g. Black).
+          type: string
+        productName:
+          description: The name of the product (e.g. Nyan Cat T-Shirt).
+          type: string
+        size:
+          description: The size of the product (e.g. Medium).
+          type: string
+        style:
+          description: The style of the product (e.g. Slim Cut).
+          type: string
+        price:
+          description: The price of a product (e.g. 24.95).
+          type: number
+        properties:
+          description: 'An object of extra arguments (e.g. { desc: ''Slim cut t-shirt with a cat on it'' }).'
+          type: object
+          additionalProperties: {}
+    registration_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/track_event'
+      required:
+      - properties
+      - event
+      properties:
+        event:
+          description: 'Event type: Must be registration'
+          type: string
+          enum:
+          - registration
+        properties:
+          required:
+          - email
+          properties:
+            email:
+              description: The email address of the user (e.g. joe@smith.com).
+              type: string
+            username:
+              description: The username (e.g. joesmith).
+              type: string
+            userId:
+              description: The user id. (e.g. 97980cfea0067).
+              type: string
+            optIn:
+              description: A boolean flag indicating whether this contact has opted in to receive marketing email.
+              type: boolean
+            firstName:
+              description: The first name of the user (e.g. Joe).
+              type: string
+            lastName:
+              description: The last name of the user (e.g. Smith).
+              type: string
+            name:
+              description: The full name of the user. (e.g. Joe Smith).
+              type: string
+            properties:
+              description: 'An object of extra arguments (e.g. { campaignId: ''12345'' }).'
+              type: object
+              additionalProperties: {}
+    waitlist_event:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/track_event'
+      required:
+      - properties
+      - event
+      properties:
+        properties:
+          required:
+          - productId
+          - variant
+          allOf:
+          - $ref: '#/components/schemas/cartitem'
+          properties:
+            quantity:
+              description: The quantity of the product added to the waitlist (e.g. 1).
+              type: number
+        event:
+          description: 'Event type: Must be waitlist'
+          type: string
+          enum:
+          - waitlist

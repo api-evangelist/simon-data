@@ -82,6 +82,8 @@ apis:
   humanURL: https://docs.simondata.com/reference/getting-started
   baseURL: https://api.simondata.com/audience/v2
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI

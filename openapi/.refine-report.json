@@ -1,8 +1,8 @@
 {
   "provider": "simon-data",
   "sources": [
-    "simon-data-contacts-api-openapi.yml",
-    "simon-data-events-api-openapi.yml"
+    "_original/simon-data-audience-api-openapi.yml",
+    "_original/simon-data-event-ingestion-openapi.yml"
   ],
   "outputs": [
     "simon-data-contacts-api-openapi.yml",
@@ -11,6 +11,30 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "15 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "simon-data-audience-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "simon-data-event-ingestion-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/simon-data-readme-waitlistevent-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-update-cartevent-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-search-event-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-remove-from-cartevent-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-registrationevent-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-product-viewevent-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-page-viewevent-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-identifyevent-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-get-a-contact-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-favoriteevent-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-customevent-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-complete-transactionevent-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-cartevent-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-authenticationevent-openapi.json: archived document superseded by a larger archived document",
+    "_original/simon-data-readme-add-to-cartevent-openapi.json: archived document superseded by a larger archived document",
+    "simon-data-contacts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "simon-data-events-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

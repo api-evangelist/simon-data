@@ -101,6 +101,9 @@ apis:
   - type: Sandbox
     url: sandbox/simon-data-sandbox.yml
 common:
+- type: CapabilityMap
+  url: capabilities/simon-data-capability-edges.yml
+  name: Simon Data Business Capability Map
 - type: Overlay
   url: overlays/simon-data-audience-api-overlay.yaml
 - type: Overlay

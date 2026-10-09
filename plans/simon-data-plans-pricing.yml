@@ -42,3 +42,16 @@ plans:
 contact:
   url: https://www.simon.ai/contact-us
   notes: Contact Simon Data sales team to discuss pricing and deployment options.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  units: []
+  plans:
+  - name: Enterprise Custom
+    access: negotiated
+    model: negotiated
+    model_how: stated
+    units: []
+    periods: []
